@@ -18,7 +18,7 @@ HINSTANCE hInst;
 HANDLE hMutex;
 HANDLE hThreadSrv;
 BOOL bSrvThreadExit;
-lua_State *lua;
+//lua_State *lua;
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {

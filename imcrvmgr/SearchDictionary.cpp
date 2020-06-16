@@ -12,7 +12,7 @@ void SearchDictionary(const std::wstring &searchkey, const std::wstring &okuri, 
 	std::wstring candidate;
 	std::wregex re;
 	std::wstring fmt;
-
+/*
 	if (lua != nullptr)
 	{
 		lua_getglobal(lua, u8"lua_skk_search");
@@ -29,7 +29,7 @@ void SearchDictionary(const std::wstring &searchkey, const std::wstring &okuri, 
 		}
 	}
 	else
-	{
+	{ */
 		//ユーザー辞書
 		candidate += SearchUserDic(searchkey, okuri);
 
@@ -57,7 +57,7 @@ void SearchDictionary(const std::wstring &searchkey, const std::wstring &okuri, 
 		re.assign(L"/\n/");
 		fmt.assign(L"/");
 		candidate = std::regex_replace(candidate, re, fmt);
-	}
+	//}
 
 	re.assign(L"[\\x00-\\x19]");
 	fmt.assign(L"");
@@ -258,7 +258,7 @@ void MakeSKKDicPos()
 std::wstring ConvertKey(const std::wstring &searchkey, const std::wstring &okuri)
 {
 	std::wstring ret;
-
+/*
 	if (lua != nullptr)
 	{
 		lua_getglobal(lua, u8"lua_skk_convert_key");
@@ -275,7 +275,7 @@ std::wstring ConvertKey(const std::wstring &searchkey, const std::wstring &okuri
 		}
 	}
 	else
-	{
+	{ */
 		//文字コード表記変換のとき見出し語変換しない
 		if (searchkey.size() > 1 && searchkey[0] == L'?')
 		{
@@ -284,7 +284,7 @@ std::wstring ConvertKey(const std::wstring &searchkey, const std::wstring &okuri
 
 		//数値変換
 		ret = std::regex_replace(searchkey, std::wregex(L"[0-9]+"), std::wstring(L"#"));
-	}
+	//}
 
 	ret = std::regex_replace(ret, std::wregex(L"[\\x00-\\x19]"), std::wstring(L""));
 
@@ -294,7 +294,7 @@ std::wstring ConvertKey(const std::wstring &searchkey, const std::wstring &okuri
 std::wstring ConvertCandidate(const std::wstring &searchkey, const std::wstring &candidate, const std::wstring &okuri)
 {
 	std::wstring ret;
-
+/*
 	if (lua != nullptr)
 	{
 		lua_getglobal(lua, u8"lua_skk_convert_candidate");
@@ -312,16 +312,18 @@ std::wstring ConvertCandidate(const std::wstring &searchkey, const std::wstring 
 		}
 	}
 	else
-	{
+	{ */
 		//concatのみ
 		ret = ParseConcat(candidate);
-	}
+	//}
 
 	ret = std::regex_replace(ret, std::wregex(L"[\\x00-\\x19]"), std::wstring(L""));
 
 	return ret;
 }
 
+
+#if 0
 int lua_search_skk_dictionary(lua_State *lua)
 {
 	std::wstring candidate;
@@ -519,3 +521,4 @@ int lua_save(lua_State *lua)
 
 	return 0;
 }
+#endif // 0

@@ -2,7 +2,7 @@
 
 #include "common.h"
 #include "parseskkdic.h"
-#include "lua.hpp"
+//#include "lua.hpp"
 
 typedef struct {
 	SKKDIC userdic;
@@ -33,6 +33,7 @@ std::wstring SearchSKKDic(const std::wstring &searchkey, const std::wstring &oku
 void MakeSKKDicPos();
 std::wstring ConvertKey(const std::wstring &searchkey, const std::wstring &okuri);
 std::wstring ConvertCandidate(const std::wstring &searchkey, const std::wstring &candidate, const std::wstring &okuri);
+#if 0
 int lua_search_skk_dictionary(lua_State *lua);
 int lua_search_user_dictionary(lua_State *lua);
 int lua_search_skk_server(lua_State *lua);
@@ -45,6 +46,7 @@ int lua_complement(lua_State *lua);
 int lua_add(lua_State *lua);
 int lua_delete(lua_State *lua);
 int lua_save(lua_State *lua);
+#endif // 0
 
 // SearchUserDictionary
 std::wstring SearchUserDic(const std::wstring &searchkey, const std::wstring &okuri);
@@ -90,7 +92,7 @@ extern HINSTANCE hInst;
 extern HANDLE hMutex;
 extern HANDLE hThreadSrv;
 extern BOOL bSrvThreadExit;
-extern lua_State *lua;
+//extern lua_State *lua;
 
 extern LPCWSTR TextServiceDesc;
 extern LPCWSTR DictionaryManagerClass;

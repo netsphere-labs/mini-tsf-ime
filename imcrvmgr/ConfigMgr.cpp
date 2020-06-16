@@ -27,6 +27,7 @@ DWORD timeout = 1000;	//タイムアウト
 BOOL precedeokuri = FALSE;	//送り仮名が一致した候補を優先する
 BOOL compincback = FALSE;	//前方一致と後方一致で補完する
 
+/*
 const luaL_Reg luaFuncs[] =
 {
 	{u8"search_skk_dictionary", lua_search_skk_dictionary},
@@ -43,6 +44,7 @@ const luaL_Reg luaFuncs[] =
 	{u8"save", lua_save},
 	{nullptr, nullptr}
 };
+*/
 
 void CreateConfigPath()
 {
@@ -272,6 +274,8 @@ BOOL IsFileModified(LPCWSTR path, FILETIME *ft)
 	return ret;
 }
 
+
+#if 0
 void InitLua()
 {
 	CHAR version[64];
@@ -339,3 +343,4 @@ void UninitLua()
 		lua = nullptr;
 	}
 }
+#endif // 0

@@ -93,7 +93,7 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 		key = std::regex_replace(argument, re, fmt);
 		fmt.assign(L"$2");
 		keyorg = std::regex_replace(argument, re, fmt);
-
+/*
 		if (lua != nullptr)
 		{
 			lua_getglobal(lua, u8"lua_skk_complement");
@@ -114,9 +114,9 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 			}
 		}
 		else
-		{
+		{ */
 			SearchComplement(key, sc);
-		}
+		//}
 
 		SearchComplementSearchCandidate(sc, _wtoi(keyorg.c_str()));
 
@@ -184,7 +184,7 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 		okuri = std::regex_replace(argument, re, fmt);
 
 		result = REP_OK;
-
+/*
 		if (lua != nullptr)
 		{
 			lua_getglobal(lua, u8"lua_skk_add");
@@ -200,9 +200,9 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 			}
 		}
 		else
-		{
+		{ */
 			AddUserDic(command, key, candidate, annotation, okuri);
-		}
+		//}
 
 		result += L"\n";
 		break;
@@ -216,7 +216,7 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 		candidate = std::regex_replace(argument, re, fmt);
 
 		result = REP_OK;
-
+/*
 		if (lua != nullptr)
 		{
 			lua_getglobal(lua, u8"lua_skk_delete");
@@ -230,16 +230,16 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 			}
 		}
 		else
-		{
+		{ */
 			DelUserDic(command, key, candidate);
-		}
+		//}
 
 		result += L"\n";
 		break;
 
 	case REQ_USER_SAVE:
 		result = REP_OK;
-
+/*
 		if (lua != nullptr)
 		{
 			lua_getglobal(lua, u8"lua_skk_save");
@@ -250,9 +250,9 @@ void SrvProc(WCHAR command, const std::wstring &argument, std::wstring &result)
 			}
 		}
 		else
-		{
+		{ */
 			StartSaveUserDic(TRUE);
-		}
+		//}
 
 		result += L"\n";
 		break;

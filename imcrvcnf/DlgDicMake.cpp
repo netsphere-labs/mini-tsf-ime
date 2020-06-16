@@ -3,7 +3,7 @@
 #include "parseskkdic.h"
 #include "configxml.h"
 #include "utf8.h"
-#include "zlib.h"
+//#include "zlib.h"
 #include "imcrvcnf.h"
 #include "resource.h"
 
@@ -463,6 +463,8 @@ HRESULT LoadSKKDicFile(HANDLE hCancelEvent, LPCWSTR path, size_t &count_key, siz
 	return S_OK;
 }
 
+
+#if 0
 HRESULT UnGzip(LPCWSTR gzpath, LPWSTR path, size_t len)
 {
 	HRESULT ret = E_MAKESKKDIC_UNGZIP;
@@ -555,6 +557,8 @@ HRESULT UnGzip(LPCWSTR gzpath, LPWSTR path, size_t len)
 
 	return ret;
 }
+#endif // 0
+
 
 int TarParseOct(const char *p, int n)
 {
@@ -793,6 +797,8 @@ HRESULT UnTar(HANDLE hCancelEvent, LPCWSTR tarpath, size_t &count_key, size_t &c
 	return ret;
 }
 
+
+#if 0
 HRESULT LoadSKKDic(HANDLE hCancelEvent, HWND hDlg, SKKDIC &entries_a, SKKDIC &entries_n)
 {
 	WCHAR path[MAX_PATH];
@@ -905,6 +911,8 @@ HRESULT LoadSKKDic(HANDLE hCancelEvent, HWND hDlg, SKKDIC &entries_a, SKKDIC &en
 
 	return S_OK;
 }
+#endif // 0
+
 
 void WriteSKKDicEntry(FILE *fp, const std::wstring &key, const SKKDICCANDIDATES &sc)
 {
@@ -981,6 +989,8 @@ HRESULT WriteSKKDic(HANDLE hCancelEvent, const SKKDIC &entries_a, const SKKDIC &
 	return S_OK;
 }
 
+
+#if 0
 void MakeSKKDicThread(void *p)
 {
 	WCHAR msg[1024];
@@ -1095,7 +1105,10 @@ void MakeSKKDicThread(void *p)
 	}
 	return;
 }
+#endif // 0
 
+
+#if 0
 INT_PTR CALLBACK DlgProcMakeSKKDic(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	static HANDLE hCancelEvent = nullptr;
@@ -1131,8 +1144,13 @@ INT_PTR CALLBACK DlgProcMakeSKKDic(HWND hDlg, UINT message, WPARAM wParam, LPARA
 	}
 	return FALSE;
 }
+#endif // 0
 
+
+#if 0
 void MakeSKKDic(HWND hDlg)
 {
 	DialogBoxW(hInst, MAKEINTRESOURCE(IDD_DIALOG_SKK_DIC_MAKE), hDlg, DlgProcMakeSKKDic);
 }
+#endif // 0
+
