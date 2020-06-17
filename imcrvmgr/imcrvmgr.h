@@ -17,8 +17,8 @@ void UpdateConfigPath();
 void CreateIpcName();
 void LoadConfig();
 BOOL IsFileModified(LPCWSTR path, FILETIME *ft);
-void InitLua();
-void UninitLua();
+//void InitLua();
+//void UninitLua();
 
 // SearchCharacter
 std::wstring SearchUnicode(const std::wstring &searchkey);
@@ -102,7 +102,7 @@ extern WCHAR pathconfigxml[MAX_PATH];	//設定
 extern WCHAR pathuserdic[MAX_PATH];		//ユーザー辞書
 extern WCHAR pathuserbak[MAX_PATH];		//ユーザー辞書バックアッププレフィックス
 extern WCHAR pathskkdic[MAX_PATH];		//取込SKK辞書
-extern WCHAR pathinitlua[MAX_PATH];		//init.lua
+//extern WCHAR pathinitlua[MAX_PATH];		//init.lua
 
 extern WCHAR krnlobjsddl[MAX_KRNLOBJNAME];	//SDDL
 extern WCHAR mgrpipename[MAX_KRNLOBJNAME];	//名前付きパイプ

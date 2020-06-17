@@ -136,7 +136,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		bUserDicChg = FALSE;
 		LoadUserDic();
 
-		InitLua();
+		//InitLua();
 
 		bSrvThreadExit = FALSE;
 		hThreadSrv = SrvStart();
@@ -187,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 		CleanUpSKKServer();
 
-		UninitLua();
+		//UninitLua();
 
 		StartSaveUserDic(FALSE);
 

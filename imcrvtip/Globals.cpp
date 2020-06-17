@@ -13,11 +13,11 @@ LPCWSTR InputModeWindowClass = TEXTSERVICE_NAME L"InputModeWindow";
 
 #ifndef _DEBUG
 
-// {EAEA0E29-AA1E-48ef-B2DF-46F4E24C6265}
+// {EAEA0E29-AA1E-48ef-B2DF-46F4E24C6265}  -- これがTIPを表すGUID (親)
 const GUID c_clsidTextService =
 {0xeaea0e29, 0xaa1e, 0x48ef, {0xb2, 0xdf, 0x46, 0xf4, 0xe2, 0x4c, 0x62, 0x65}};
 
-// {956F14B3-5310-4cef-9651-26710EB72F3A}
+// {956F14B3-5310-4cef-9651-26710EB72F3A}  -- これがレイアウトを表す GUID (子)
 const GUID c_guidProfile =
 {0x956f14b3, 0x5310, 0x4cef, {0x96, 0x51, 0x26, 0x71, 0x0e, 0xb7, 0x2f, 0x3a}};
 

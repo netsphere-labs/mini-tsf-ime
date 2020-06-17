@@ -26,7 +26,7 @@
 #define IDC_BUTTON_SKK_DIC_DEL                  1004
 #define IDC_BUTTON_SKK_DIC_UP                   1005
 #define IDC_BUTTON_SKK_DIC_DOWN                 1006
-#define IDC_BUTTON_SKK_DIC_MAKE                 1007
+//#define IDC_BUTTON_SKK_DIC_MAKE                 1007
 #define IDD_DIALOG_SKK_DIC_MAKE                 1021
 #define IDC_PROGRESS_DIC_MAKE                   1022
 #define IDC_BUTTON_ABORT_DIC_MAKE               1023

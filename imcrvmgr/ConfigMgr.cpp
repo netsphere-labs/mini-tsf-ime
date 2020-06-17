@@ -11,7 +11,7 @@ WCHAR pathconfigxml[MAX_PATH];	//設定
 WCHAR pathuserdic[MAX_PATH];	//ユーザー辞書
 WCHAR pathuserbak[MAX_PATH];	//ユーザー辞書バックアッププレフィックス
 WCHAR pathskkdic[MAX_PATH];		//取込SKK辞書
-WCHAR pathinitlua[MAX_PATH];	//init.lua
+//WCHAR pathinitlua[MAX_PATH];	//init.lua
 
 WCHAR krnlobjsddl[MAX_KRNLOBJNAME];		//SDDL
 WCHAR mgrpipename[MAX_KRNLOBJNAME];		//名前付きパイプ
@@ -54,7 +54,7 @@ void CreateConfigPath()
 	ZeroMemory(pathuserdic, sizeof(pathuserdic));
 	ZeroMemory(pathuserbak, sizeof(pathuserbak));
 	ZeroMemory(pathskkdic, sizeof(pathskkdic));
-	ZeroMemory(pathinitlua, sizeof(pathinitlua));
+	//ZeroMemory(pathinitlua, sizeof(pathinitlua));
 
 	if (SUCCEEDED(SHGetKnownFolderPath(FOLDERID_RoamingAppData, KF_FLAG_DONT_VERIFY, nullptr, &knownfolderpath)))
 	{
@@ -71,7 +71,7 @@ void CreateConfigPath()
 		_snwprintf_s(pathuserdic, _TRUNCATE, L"%s\\%s", appdir, fnuserdic);
 		_snwprintf_s(pathuserbak, _TRUNCATE, L"%s\\%s", appdir, fnuserbak);
 		_snwprintf_s(pathskkdic, _TRUNCATE, L"%s\\%s", appdir, fnskkdic);
-		_snwprintf_s(pathinitlua, _TRUNCATE, L"%s\\%s", appdir, fninitlua);
+		//_snwprintf_s(pathinitlua, _TRUNCATE, L"%s\\%s", appdir, fninitlua);
 
 		//for compatibility
 		if (GetFileAttributesW(pathskkdic) == INVALID_FILE_ATTRIBUTES)

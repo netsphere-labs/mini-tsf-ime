@@ -223,7 +223,7 @@ INT_PTR CALLBACK DlgProcDictionary(HWND hDlg, UINT message, WPARAM wParam, LPARA
 				ListView_SetColumnWidth(hWndListView, 2, GetScaledSizeX(hDlg, 80));
 			}
 			return TRUE;
-
+/*
 		case IDC_BUTTON_SKK_DIC_MAKE:
 			if (IDOK == MessageBoxW(hDlg,
 				L"SKK辞書を取り込みます。\nよろしいですか？",
@@ -232,7 +232,7 @@ INT_PTR CALLBACK DlgProcDictionary(HWND hDlg, UINT message, WPARAM wParam, LPARA
 				MakeSKKDic(hDlg);
 			}
 			return TRUE;
-
+*/
 		case IDC_CHECKBOX_SKKSRV:
 			PropSheet_Changed(GetParent(hDlg), hDlg);
 			return TRUE;

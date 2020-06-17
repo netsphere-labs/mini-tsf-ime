@@ -62,7 +62,7 @@ extern LPCWSTR fnconfigxml;	//設定
 extern LPCWSTR fnuserdic;	//ユーザー辞書
 extern LPCWSTR fnuserbak;	//ユーザー辞書バックアッププレフィックス
 extern LPCWSTR fnskkdic;	//取込SKK辞書
-extern LPCWSTR fninitlua;	//init.lua
+//extern LPCWSTR fninitlua;	//init.lua
 
 #define DISPLAY_LIST_COLOR_NUM	8
 #define DISPLAY_MODE_COLOR_NUM	8

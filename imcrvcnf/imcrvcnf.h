@@ -16,7 +16,8 @@ void LoadCheckButton(HWND hDlg, int nIDDlgItem, LPCWSTR lpAppName, LPCWSTR lpKey
 void SaveCheckButton(IXmlWriter *pWriter, HWND hDlg, int nIDDlgItem, LPCWSTR lpKeyName);
 BOOL SaveConfigXml(HWND hDlg);
 // DlgDicMake
-void MakeSKKDic(HWND hDlg);
+//void MakeSKKDic(HWND hDlg);
+
 // DlgDicAddUrl
 INT_PTR CALLBACK DlgProcSKKDicAddUrl(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam);
 // DlgProcDictionary
