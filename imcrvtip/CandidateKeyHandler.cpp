@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
@@ -58,7 +58,7 @@ HRESULT CCandidateWindow::_OnKeyDown(UINT uVKey)
 			else
 			{
 				_PreEndReq();
-				_HandleKey(0, SKK_ENTER);
+				_HandleKey(0, 0, SKK_ENTER);
 				_EndReq();
 			}
 			break;
@@ -70,7 +70,7 @@ HRESULT CCandidateWindow::_OnKeyDown(UINT uVKey)
 			else
 			{
 				_PreEndReq();
-				_HandleKey(0, SKK_CANCEL);
+				_HandleKey(0, 0, SKK_CANCEL);
 				_EndReq();
 			}
 			return S_OK;
@@ -131,13 +131,13 @@ HRESULT CCandidateWindow::_OnKeyDown(UINT uVKey)
 						_RestoreStatusReg();
 					}
 					_PreEndReq();
-					_HandleKey(0, SKK_CANCEL);
+					_HandleKey(0, 0, SKK_CANCEL);
 					_EndReq();
 				}
 			}
 			else
 			{
-				_HandleKey(0, SKK_CANCEL);
+				_HandleKey(0, 0, SKK_CANCEL);
 				_Update();
 			}
 		}
@@ -183,14 +183,14 @@ HRESULT CCandidateWindow::_OnKeyDown(UINT uVKey)
 								}
 								_PreEndReq();
 								_pTextService->candidx = index;
-								_HandleKey(0, SKK_ENTER);
+								_HandleKey(0, 0, SKK_ENTER);
 								_EndReq();
 							}
 						}
 						else
 						{
 							_pTextService->candidx = index;
-							_HandleKey(0, SKK_ENTER);
+							_HandleKey(0, 0, SKK_ENTER);
 							_Update();
 						}
 						break;
@@ -215,7 +215,7 @@ void CCandidateWindow::_OnKeyDownRegword(UINT uVKey)
 	if (!_regfixed)
 	{
 		_pTextService->showcandlist = FALSE;	//候補一覧表示をループさせる
-		_HandleKey((WPARAM)uVKey, SKK_NULL);
+		_HandleKey((WPARAM)uVKey, 0, SKK_NULL);
 		_Update();
 
 		if (_pInputModeWindow != nullptr)
@@ -292,11 +292,11 @@ void CCandidateWindow::_OnKeyDownRegword(UINT uVKey)
 					_PreEndReq();
 					if (_pTextService->candidates.empty())
 					{
-						_HandleKey(0, SKK_CANCEL);
+						_HandleKey(0, 0, SKK_CANCEL);
 					}
 					else
 					{
-						_HandleKey(0, SKK_PREV_CAND);
+						_HandleKey(0, 0, SKK_PREV_CAND);
 					}
 					_EndReq();
 				}
@@ -367,7 +367,7 @@ void CCandidateWindow::_OnKeyDownRegword(UINT uVKey)
 			else
 			{
 				_PreEndReq();
-				_HandleKey(0, SKK_ENTER);
+				_HandleKey(0, 0, SKK_ENTER);
 				_EndReq();
 			}
 		}
@@ -415,11 +415,11 @@ void CCandidateWindow::_OnKeyDownRegword(UINT uVKey)
 				_PreEndReq();
 				if (_pTextService->candidates.empty())
 				{
-					_HandleKey(0, SKK_CANCEL);
+					_HandleKey(0, 0, SKK_CANCEL);
 				}
 				else
 				{
-					_HandleKey(0, SKK_PREV_CAND);
+					_HandleKey(0, 0, SKK_PREV_CAND);
 				}
 				_EndReq();
 			}
@@ -540,7 +540,7 @@ void CCandidateWindow::_OnKeyDownRegword(UINT uVKey)
 		break;
 
 	default:
-		_HandleKey((WPARAM)uVKey, SKK_NULL);
+		_HandleKey((WPARAM)uVKey, 0, SKK_NULL);
 
 		if (_pInputModeWindow != nullptr)
 		{
@@ -566,19 +566,17 @@ void CCandidateWindow::_InvokeKeyHandler(UINT uVKey)
 	}
 }
 
-void CCandidateWindow::_HandleKey(WPARAM wParam, BYTE bSf)
+void CCandidateWindow::_HandleKey(WPARAM wParam, LPARAM lParam, BYTE bSf)
 {
 	if (_pTextService != nullptr)
-	{
-		_pTextService->_HandleKey(0, nullptr, wParam, bSf);
-	}
+        _pTextService->_HandleKey(0, nullptr, wParam, lParam, bSf);
 }
 
 void CCandidateWindow::_GetChSf(UINT uVKey, WCHAR &ch, BYTE &sf, BYTE vkoff)
 {
 	if (_pTextService != nullptr)
 	{
-		ch = _pTextService->_GetCh(uVKey, vkoff);
+		ch = _pTextService->_GetCh(uVKey, 0, vkoff);
 		sf = _pTextService->_GetSf(uVKey, ch);
 	}
 }

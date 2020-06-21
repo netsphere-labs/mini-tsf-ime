@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
@@ -471,7 +471,7 @@ HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext, BYTE
 		{
 			if (complement)
 			{
-				return _HandleKey(ec, pContext, 0, SKK_NEXT_CAND);
+				return _HandleKey(ec, pContext, 0, 0, SKK_NEXT_CAND);
 			}
 			return S_OK;
 		}

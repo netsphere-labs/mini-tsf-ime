@@ -4,7 +4,7 @@
 #include "CandidateList.h"
 
 // @param vk    *Physical* virtual-key code.
-WCHAR CTextService::_GetCh(WORD vk, BYTE vkoff)
+WCHAR CTextService::_GetCh(WORD vk, WORD scan, BYTE vkoff)
 {
 	BYTE keystate[256];
 	WCHAR ubuff;
@@ -35,10 +35,15 @@ WCHAR CTextService::_GetCh(WORD vk, BYTE vkoff)
 		break;
 	}
 
+    int retu;
     if (vk == VK_PACKET) {
-        // TODO: UTF-16
+        // See https://gitlab.gnome.org/GNOME/gtk/-/blob/b6db96cd1a3de19d7b356a657b9330a292772c98/gdk/win32/gdkevents-win32.c#L2526
+        // TODO: UTF-16 surrogate pair
+        retu = ToUnicode(vk, scan, keystate, &ubuff, 1, 0);
     }
-	int retu = ToUnicode(vk, 0, keystate, &ubuff, 1, 0);
+    else {
+        retu = ToUnicode(vk, 0, keystate, &ubuff, 1, 0);
+    }
 	if (retu == 1)
 	{
 		u = ubuff;

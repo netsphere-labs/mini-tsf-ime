@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "TextService.h"
 #include "CandidateList.h"
@@ -77,7 +77,7 @@ private:
 	void _OnKeyDownRegword(UINT uVKey);
 	void _InvokeSfHandler(BYTE sf);
 	void _InvokeKeyHandler(UINT uVKey);
-	void _HandleKey(WPARAM wParam, BYTE bSf);
+	void _HandleKey(WPARAM wParam, LPARAM lParam, BYTE bSf);
 	void _GetChSf(UINT uVKey, WCHAR &ch, BYTE &sf, BYTE vkoff = 0);
 
 	//Paint

@@ -8,17 +8,18 @@ class CKeyHandlerEditSession : public CEditSessionBase
 {
 public:
     // @param wParam   *Physical* virtual-key code.
-	CKeyHandlerEditSession(CTextService *pTextService, ITfContext *pContext, WPARAM wParam, BYTE bSf) : CEditSessionBase(pTextService, pContext)
+    CKeyHandlerEditSession(CTextService *pTextService, ITfContext *pContext,
+                           WPARAM wParam, LPARAM lParam, BYTE bSf) :
+        CEditSessionBase(pTextService, pContext),
+        _wParam(wParam), _lParam(lParam), _bSf(bSf)
 	{
-		_wParam = wParam;
-		_bSf = bSf;
 	}
 
 	// ITfEditSession
 	STDMETHODIMP DoEditSession(TfEditCookie ec)
 	{
 #ifdef _DEBUG
-		_pTextService->_HandleKey(ec, _pContext, _wParam, _bSf);
+        _pTextService->_HandleKey(ec, _pContext, _wParam, _lParam, _bSf);
 #else
 		__try
 		{
@@ -34,8 +35,9 @@ public:
 	}
 
 private:
-	WPARAM _wParam;
-	BYTE _bSf;
+	const WPARAM _wParam;
+    const LPARAM _lParam;
+	const BYTE _bSf;
 };
 
 
@@ -48,7 +50,7 @@ HRESULT CTextService::_InvokeKeyHandler(ITfContext *pContext, WPARAM wParam,
     try {
 		CComPtr<ITfEditSession> pEditSession;
 		pEditSession.Attach(
-			new CKeyHandlerEditSession(this, pContext, wParam, bSf));
+			new CKeyHandlerEditSession(this, pContext, wParam, lParam, bSf));
         pContext->RequestEditSession(_ClientId, pEditSession,
                                      TF_ES_SYNC | TF_ES_READWRITE, &hr);
 	}
@@ -61,14 +63,14 @@ HRESULT CTextService::_InvokeKeyHandler(ITfContext *pContext, WPARAM wParam,
 
 // @param wParam   *Physical* virtual-key code.
 HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
-                                 WPARAM wParam, BYTE bSf)
+                                 WPARAM wParam, LPARAM lParam, BYTE bSf)
 {
 	BYTE sf;
 	WCHAR ch, chO = L'\0';
 	HRESULT hrc = E_ABORT;
 
     if (bSf == SKK_NULL) {
-		ch = _GetCh((WORD) wParam);
+		ch = _GetCh((WORD) wParam, HIWORD(lParam));
 		sf = _GetSf((WORD) wParam, ch);
 	}
     else {  // called by _HandleControl(), CCandidateWindow::_OnKeyDown()

@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
@@ -599,7 +599,7 @@ void CCandidateWindow::_PrevPage()
 							_RestoreStatusReg();
 						}
 						_PreEndReq();
-						_HandleKey(0, SKK_CANCEL);
+						_HandleKey(0, 0, SKK_CANCEL);
 						_EndReq();
 					}
 				}
@@ -618,7 +618,7 @@ void CCandidateWindow::_PrevPage()
 						}
 						_PreEndReq();
 						_pTextService->candidx = _pTextService->cx_untilcandlist - 1;
-						_HandleKey(0, SKK_PREV_CAND);
+						_HandleKey(0, 0, SKK_PREV_CAND);
 						_EndReq();
 					}
 				}
@@ -627,12 +627,12 @@ void CCandidateWindow::_PrevPage()
 			{
 				if (_pTextService->cx_untilcandlist == 1)
 				{
-					_HandleKey(0, SKK_CANCEL);
+					_HandleKey(0, 0, SKK_CANCEL);
 				}
 				else
 				{
 					_pTextService->candidx = _pTextService->cx_untilcandlist - 1;
-					_HandleKey(0, SKK_PREV_CAND);
+					_HandleKey(0, 0, SKK_PREV_CAND);
 				}
 
 				_Update();

@@ -10,7 +10,8 @@ static const GUID c_guidPreservedKeyOnOff[PRESERVEDKEY_NUM] = {c_guidPreservedKe
  * IME で key down/up を処理すべきかどうか
  * @return IME で処理すべきメッセージだったとき, TRUE
  */
-BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
+BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam,
+                               LPARAM lParam)
 {
     if (_IsKeyboardDisabled())
         return FALSE;
@@ -34,7 +35,7 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
 	SHORT vk_ctrl = GetKeyState(VK_CONTROL) & 0x8000;
 	SHORT vk_kana = GetKeyState(VK_KANA) & 0x0001;
 
-	WCHAR ch = _GetCh((WORD) wParam);
+	WCHAR ch = _GetCh((WORD) wParam, HIWORD(lParam));
 	BYTE sf = _GetSf((WORD) wParam, ch);
 
 	//確定状態で処理する機能
@@ -133,12 +134,12 @@ IFACEMETHODIMP CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam,
     if ( !pfEaten )
         return E_INVALIDARG;
 
-	*pfEaten = _IsKeyEaten(pic, wParam);
+	*pfEaten = _IsKeyEaten(pic, wParam, lParam);
 
 	_EndInputModeWindow();
 
     if (!_IsKeyboardDisabled() && _IsKeyboardOpen() && !_IsComposing()) {
-        WCHAR ch = _GetCh((WORD) wParam);
+        WCHAR ch = _GetCh((WORD) wParam, HIWORD(lParam));
 		if (_IsKeyVoid(ch, (BYTE)wParam))
 		{
 			_GetActiveFlags();
@@ -159,7 +160,7 @@ IFACEMETHODIMP CTextService::OnKeyDown(ITfContext *pic, WPARAM wParam,
     if ( !pfEaten )
         return E_INVALIDARG;
 
-    *pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam, lParam);
     if (*pfEaten) {
         vkCode = wParam;
         //_InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
@@ -175,7 +176,7 @@ IFACEMETHODIMP CTextService::OnTestKeyUp(ITfContext *pic, WPARAM wParam,
     if ( !pfEaten )
         return E_INVALIDARG;
 
-    *pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam, lParam);
 
     return S_OK;
 }
@@ -188,7 +189,7 @@ IFACEMETHODIMP CTextService::OnKeyUp(ITfContext *pic, WPARAM wParam,
     if ( !pfEaten )
         return E_INVALIDARG;
 
-    *pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam, lParam);
     if (*pfEaten) {
         _InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
     }
@@ -199,10 +200,8 @@ IFACEMETHODIMP CTextService::OnKeyUp(ITfContext *pic, WPARAM wParam,
 IFACEMETHODIMP CTextService::OnPreservedKey(ITfContext *pic, REFGUID rguid,
                                             BOOL *pfEaten)
 {
-	if (pic == nullptr || pfEaten == nullptr)
-	{
+    if ( !pic || !pfEaten )
 		return E_INVALIDARG;
-	}
 
 	BOOL fOpen = _IsKeyboardOpen();
 

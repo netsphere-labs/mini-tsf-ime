@@ -134,7 +134,8 @@ public:
 
 	// KeyHandler
 	HRESULT _InvokeKeyHandler(ITfContext *pContext, WPARAM wParam, LPARAM lParam, BYTE bSf);
-	HRESULT _HandleKey(TfEditCookie ec, ITfContext *pContext, WPARAM wParam, BYTE bSf);
+    HRESULT _HandleKey(TfEditCookie ec, ITfContext *pContext, WPARAM wParam,
+                       LPARAM lParam, BYTE bSf);
 	void _KeyboardOpenCloseChanged(BOOL showinputmode = TRUE);
 	void _KeyboardInputConversionChanged();
 	BOOL _KeyboardSetDefaultMode();
@@ -160,8 +161,8 @@ public:
 	// KeyHandlerControl
 	HRESULT _HandleControl(TfEditCookie ec, ITfContext *pContext, BYTE sf, WCHAR ch);
 
-	// KeyHandlerConv
-	WCHAR _GetCh( WORD vk, BYTE vkoff = 0);
+	// KeyHandlerConv.cpp
+	WCHAR _GetCh( WORD vk, WORD scan, BYTE vkoff = 0);
 	BYTE _GetSf( WORD vk, WCHAR ch);
 	HRESULT _ConvRomanKana(ROMAN_KANA_CONV *pconv);
 	HRESULT _SearchRomanKanaNode(const ROMAN_KANA_NODE &tree, ROMAN_KANA_CONV *pconv, int depth);
@@ -246,7 +247,7 @@ private:
 	BOOL _InitFunctionProvider();
 	void _UninitFunctionProvider();
 
-	BOOL _IsKeyEaten(ITfContext *pContext, WPARAM wParam);
+	BOOL _IsKeyEaten(ITfContext *pContext, WPARAM wParam, LPARAM lParam);
 
 	CComPtr<ITfThreadMgr> _pThreadMgr;
 	TfClientId _ClientId;
