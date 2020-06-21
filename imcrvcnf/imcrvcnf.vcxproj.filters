@@ -85,11 +85,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="imcrvcnf.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="imcrvcnf.ico">
       <Filter>Resource Files</Filter>
     </Image>
@@ -98,5 +93,10 @@
     <Manifest Include="imcrvcnf.manifest">
       <Filter>Resource Files</Filter>
     </Manifest>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="imcrvcnf.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

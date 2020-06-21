@@ -39,6 +39,12 @@ FILESUBTYPE        VFT2_UNKNOWN
 
 IDI_IMCRVCNF       ICON  "imcrvcnf.ico"
 
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
 IDD_DIALOG_DICTIONARY DIALOG 0, 0, 268, 244
 STYLE DS_CONTROL | DS_CENTER | DS_SETFONT | WS_VISIBLE | WS_CHILD
 CAPTION "辞書"

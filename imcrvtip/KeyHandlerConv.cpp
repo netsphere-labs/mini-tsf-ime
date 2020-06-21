@@ -1,9 +1,10 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
 
-WCHAR CTextService::_GetCh(BYTE vk, BYTE vkoff)
+// @param vk    *Physical* virtual-key code.
+WCHAR CTextService::_GetCh(WORD vk, BYTE vkoff)
 {
 	BYTE keystate[256];
 	WCHAR ubuff;
@@ -26,14 +27,17 @@ WCHAR CTextService::_GetCh(BYTE vk, BYTE vkoff)
 			keystate[vkoff] = 0;
 		}
 		break;
-	case im_jlatin:
-	case im_ascii:
+	case im_jlatin: // 全英
+	case im_ascii:  // 半英
 		keystate[VK_KANA] = 0;
 		break;
-	default:
+	default:  // im_disable, im_direct
 		break;
 	}
 
+    if (vk == VK_PACKET) {
+        // TODO: UTF-16
+    }
 	int retu = ToUnicode(vk, 0, keystate, &ubuff, 1, 0);
 	if (retu == 1)
 	{
@@ -43,7 +47,7 @@ WCHAR CTextService::_GetCh(BYTE vk, BYTE vkoff)
 	return u;
 }
 
-BYTE CTextService::_GetSf(BYTE vk, WCHAR ch)
+BYTE CTextService::_GetSf( WORD vk, WCHAR ch)
 {
 	BYTE k = SKK_NULL;
 	SHORT vk_shift = GetKeyState(VK_SHIFT) & 0x8000;

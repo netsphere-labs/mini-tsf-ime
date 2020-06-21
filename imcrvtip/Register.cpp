@@ -39,7 +39,8 @@ BOOL RegisterProfiles()
 		ZeroMemory(fileName, sizeof(fileName));
 		GetModuleFileNameW(g_hInst, fileName, _countof(fileName));
 
-		hr = pInputProcessorProfileMgr->RegisterProfile(c_clsidTextService, TEXTSERVICE_LANGID, c_guidProfile,
+		hr = pInputProcessorProfileMgr->RegisterProfile(c_clsidTextService, 
+			TEXTSERVICE_LANGID, c_guidProfile,
 			TextServiceDesc, (ULONG)wcslen(TextServiceDesc), fileName, (ULONG)wcslen(fileName), TEXTSERVICE_ICON_INDEX,
 			nullptr, 0, TRUE, 0);
 	}

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include <tsattrs.h>
 
@@ -14,7 +14,7 @@ enum InputMode
 	im_katakana,		//カタカナ
 	im_katakana_ank,	//半角ｶﾀｶﾅ
 	im_jlatin,			//全英
-	im_ascii			//ASCII
+    im_ascii			//半英
 };
 
 #define CKEYMAPNUM		0x80	// 0x00-0x7F

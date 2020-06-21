@@ -1,4 +1,4 @@
-﻿
+
 #include "configxml.h"
 #include "imcrvtip.h"
 #include "EditSession.h"
@@ -7,6 +7,7 @@
 class CKeyHandlerEditSession : public CEditSessionBase
 {
 public:
+    // @param wParam   *Physical* virtual-key code.
 	CKeyHandlerEditSession(CTextService *pTextService, ITfContext *pContext, WPARAM wParam, BYTE bSf) : CEditSessionBase(pTextService, pContext)
 	{
 		_wParam = wParam;
@@ -37,37 +38,40 @@ private:
 	BYTE _bSf;
 };
 
-HRESULT CTextService::_InvokeKeyHandler(ITfContext *pContext, WPARAM wParam, LPARAM lParam, BYTE bSf)
+
+// @param wParam   *Physical* virtual-key code.
+HRESULT CTextService::_InvokeKeyHandler(ITfContext *pContext, WPARAM wParam,
+                                        LPARAM lParam, BYTE bSf)
 {
 	HRESULT hr = E_FAIL;
 
-	try
-	{
+    try {
 		CComPtr<ITfEditSession> pEditSession;
 		pEditSession.Attach(
 			new CKeyHandlerEditSession(this, pContext, wParam, bSf));
-		pContext->RequestEditSession(_ClientId, pEditSession, TF_ES_SYNC | TF_ES_READWRITE, &hr);
+        pContext->RequestEditSession(_ClientId, pEditSession,
+                                     TF_ES_SYNC | TF_ES_READWRITE, &hr);
 	}
-	catch (...)
-	{
+    catch (...) {
 	}
 
 	return hr;
 }
 
-HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext, WPARAM wParam, BYTE bSf)
+
+// @param wParam   *Physical* virtual-key code.
+HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
+                                 WPARAM wParam, BYTE bSf)
 {
 	BYTE sf;
 	WCHAR ch, chO = L'\0';
 	HRESULT hrc = E_ABORT;
 
-	if (bSf == SKK_NULL)
-	{
-		ch = _GetCh((BYTE)wParam);
-		sf = _GetSf((BYTE)wParam, ch);
+    if (bSf == SKK_NULL) {
+		ch = _GetCh((WORD) wParam);
+		sf = _GetSf((WORD) wParam, ch);
 	}
-	else
-	{
+    else {  // called by _HandleControl(), CCandidateWindow::_OnKeyDown()
 		ch = WCHAR_MAX;
 		sf = bSf;
 	}

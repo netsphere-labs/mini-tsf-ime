@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
@@ -6,17 +6,17 @@
 static LPCWSTR c_PreservedKeyDesc[PRESERVEDKEY_NUM] = {L"ON", L"OFF"};
 static const GUID c_guidPreservedKeyOnOff[PRESERVEDKEY_NUM] = {c_guidPreservedKeyOn, c_guidPreservedKeyOff};
 
+/**
+ * IME で key down/up を処理すべきかどうか
+ * @return IME で処理すべきメッセージだったとき, TRUE
+ */
 BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
 {
-	if (_IsKeyboardDisabled())
-	{
-		return FALSE;
-	}
+    if (_IsKeyboardDisabled())
+        return FALSE;
 
-	if (!_IsKeyboardOpen())
-	{
-		return FALSE;
-	}
+    if (!_IsKeyboardOpen())
+        return FALSE;
 
 	if (_pCandidateList && _pCandidateList->_IsContextCandidateWindow(pContext))
 	{
@@ -34,8 +34,8 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
 	SHORT vk_ctrl = GetKeyState(VK_CONTROL) & 0x8000;
 	SHORT vk_kana = GetKeyState(VK_KANA) & 0x0001;
 
-	WCHAR ch = _GetCh((BYTE)wParam);
-	BYTE sf = _GetSf((BYTE)wParam, ch);
+	WCHAR ch = _GetCh((WORD) wParam);
+	BYTE sf = _GetSf((WORD) wParam, ch);
 
 	//確定状態で処理する機能
 	switch (inputmode)
@@ -122,25 +122,23 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam)
 	return FALSE;
 }
 
-STDAPI CTextService::OnSetFocus(BOOL fForeground)
+IFACEMETHODIMP CTextService::OnSetFocus(BOOL fForeground)
 {
 	return S_OK;
 }
 
-STDAPI CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam, LPARAM lParam, BOOL *pfEaten)
+IFACEMETHODIMP CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam,
+                                           LPARAM lParam, BOOL *pfEaten)
 {
-	if (pfEaten == nullptr)
-	{
-		return E_INVALIDARG;
-	}
+    if ( !pfEaten )
+        return E_INVALIDARG;
 
 	*pfEaten = _IsKeyEaten(pic, wParam);
 
 	_EndInputModeWindow();
 
-	if (!_IsKeyboardDisabled() && _IsKeyboardOpen() && !_IsComposing())
-	{
-		WCHAR ch = _GetCh((BYTE)wParam);
+    if (!_IsKeyboardDisabled() && _IsKeyboardOpen() && !_IsComposing()) {
+        WCHAR ch = _GetCh((WORD) wParam);
 		if (_IsKeyVoid(ch, (BYTE)wParam))
 		{
 			_GetActiveFlags();
@@ -151,48 +149,55 @@ STDAPI CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam, LPARAM lParam
 	return S_OK;
 }
 
-STDAPI CTextService::OnKeyDown(ITfContext *pic, WPARAM wParam, LPARAM lParam, BOOL *pfEaten)
+// とりあえず OnKeyUp() からの文字入力のテスト。
+WPARAM vkCode;
+
+// @param wParam   *Physical* virtual-key code.
+IFACEMETHODIMP CTextService::OnKeyDown(ITfContext *pic, WPARAM wParam,
+                                       LPARAM lParam, BOOL *pfEaten)
 {
-	if (pfEaten == nullptr)
-	{
-		return E_INVALIDARG;
-	}
+    if ( !pfEaten )
+        return E_INVALIDARG;
 
-	*pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam);
+    if (*pfEaten) {
+        vkCode = wParam;
+        //_InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
+    }
 
-	if (*pfEaten)
-	{
-		_InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
-	}
-
-	return S_OK;
+    return S_OK;
 }
 
-STDAPI CTextService::OnTestKeyUp(ITfContext *pic, WPARAM wParam, LPARAM lParam, BOOL *pfEaten)
+
+IFACEMETHODIMP CTextService::OnTestKeyUp(ITfContext *pic, WPARAM wParam,
+                                         LPARAM lParam, BOOL *pfEaten)
 {
-	if (pfEaten == nullptr)
-	{
-		return E_INVALIDARG;
-	}
+    if ( !pfEaten )
+        return E_INVALIDARG;
 
-	*pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam);
 
-	return S_OK;
+    return S_OK;
 }
 
-STDAPI CTextService::OnKeyUp(ITfContext *pic, WPARAM wParam, LPARAM lParam, BOOL *pfEaten)
+
+// @param wParam   *Physical* virtual-key code.
+IFACEMETHODIMP CTextService::OnKeyUp(ITfContext *pic, WPARAM wParam,
+                                     LPARAM lParam, BOOL *pfEaten)
 {
-	if (pfEaten == nullptr)
-	{
-		return E_INVALIDARG;
-	}
+    if ( !pfEaten )
+        return E_INVALIDARG;
 
-	*pfEaten = _IsKeyEaten(pic, wParam);
+    *pfEaten = _IsKeyEaten(pic, wParam);
+    if (*pfEaten) {
+        _InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
+    }
 
-	return S_OK;
+    return S_OK;
 }
 
-STDAPI CTextService::OnPreservedKey(ITfContext *pic, REFGUID rguid, BOOL *pfEaten)
+IFACEMETHODIMP CTextService::OnPreservedKey(ITfContext *pic, REFGUID rguid,
+                                            BOOL *pfEaten)
 {
 	if (pic == nullptr || pfEaten == nullptr)
 	{
@@ -244,9 +249,10 @@ BOOL CTextService::_InitKeyEventSink()
 	HRESULT hr = E_FAIL;
 
 	CComPtr<ITfKeystrokeMgr> pKeystrokeMgr;
-	if (SUCCEEDED(_pThreadMgr->QueryInterface(IID_PPV_ARGS(&pKeystrokeMgr))) && (pKeystrokeMgr != nullptr))
-	{
-		hr = pKeystrokeMgr->AdviseKeyEventSink(_ClientId, static_cast<ITfKeyEventSink *>(this), TRUE);
+    if ( SUCCEEDED(_pThreadMgr->QueryInterface(IID_PPV_ARGS(&pKeystrokeMgr))) &&
+         pKeystrokeMgr != nullptr ) {
+        hr = pKeystrokeMgr->AdviseKeyEventSink(_ClientId,
+                                   static_cast<ITfKeyEventSink *>(this), TRUE);
 	}
 
 	return SUCCEEDED(hr);

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 #include "imcrvtip.h"
 #include "convtype.h"
@@ -161,8 +161,8 @@ public:
 	HRESULT _HandleControl(TfEditCookie ec, ITfContext *pContext, BYTE sf, WCHAR ch);
 
 	// KeyHandlerConv
-	WCHAR _GetCh(BYTE vk, BYTE vkoff = 0);
-	BYTE _GetSf(BYTE vk, WCHAR ch);
+	WCHAR _GetCh( WORD vk, BYTE vkoff = 0);
+	BYTE _GetSf( WORD vk, WCHAR ch);
 	HRESULT _ConvRomanKana(ROMAN_KANA_CONV *pconv);
 	HRESULT _SearchRomanKanaNode(const ROMAN_KANA_NODE &tree, ROMAN_KANA_CONV *pconv, int depth);
 	HRESULT _ConvAsciiJLatin(ASCII_JLATIN_CONV *pconv);
