@@ -13,6 +13,7 @@ set PATH=%PATH%;%LocalAppData%\Pandoc;%ProgramFiles%\Pandoc;%ProgramFiles(x86)%\
 
 set DESCRIPTION=CorvusSKK
 
+copy README.md "installer\%TARGETDIR%\README.html"
 pandoc.exe ^
 -s ^
 -f gfm-ascii_identifiers ^
@@ -30,14 +31,14 @@ README.md
 popd
 
 copy /y /b "..\LICENSE.TXT" "%TARGETDIR%\LICENSE.txt" > nul
-copy /y /b "config-lua\init.lua" "%TARGETDIR%\init.lua" > nul
+REM copy /y /b "config-lua\init.lua" "%TARGETDIR%\init.lua" > nul
 copy /y /b "config-share\config.xml" "%TARGETDIR%\config.xml" > nul
 copy /y /b "config-share\skkdict.txt" "%TARGETDIR%\skkdict.txt" > nul
 
 pushd "%TARGETDIR%"
 
 copy /b LICENSE.txt + > nul
-copy /b init.lua + > nul
+REM copy /b init.lua + > nul
 copy /b config.xml + > nul
 copy /b skkdict.txt + > nul
 

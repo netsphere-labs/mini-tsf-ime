@@ -52,6 +52,7 @@
       <Component Id="TIP_X64" Guid="010DBC18-3C6C-491D-9236-C68B94905C81" Win64="yes">
         <File Id="F_imcrvtip_x64" Name="imcrvtip.dll" Source="..\x64\Release\imcrvtip.dll" KeyPath="yes" SelfRegCost="1" />
       </Component>
+<!--
       <Component Id="LUAEXE_X64" Guid="603A9A91-D244-4AA7-A8AD-56B2563C0C25" Win64="yes">
         <File Id="F_luaexe_x64" Name="lua.exe" Source="..\x64\Release\lua.exe" KeyPath="yes" />
       </Component>
@@ -61,6 +62,7 @@
       <Component Id="ZLIBDLL_X64" Guid="796681FD-4DAE-4658-A7C1-B87E6F2CCE6C" Win64="yes">
         <File Id="F_zlibdll_x64" Name="zlib1.dll" Source="..\x64\Release\zlib1.dll" KeyPath="yes" />
       </Component>
+  -->
     </DirectoryRef>
 
     <DirectoryRef Id="IMCRVSKK_X64">
@@ -88,9 +90,10 @@
       <ComponentRef Id="CNF_X64" />
       <ComponentRef Id="MGR_X64" />
       <ComponentRef Id="TIP_X64" />
+<!--      
       <ComponentRef Id="LUAEXE_X64" />
       <ComponentRef Id="LUADLL_X64" />
-      <ComponentRef Id="ZLIBDLL_X64" />
+      <ComponentRef Id="ZLIBDLL_X64" />  -->
       <ComponentRef Id="MSVCP140_X64" />
       <ComponentRef Id="VCRUNTIME140_X64" />
       <ComponentRef Id="VCRUNTIME140_1_X64" />

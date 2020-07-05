@@ -3,8 +3,10 @@
 #include "TextService.h"
 #include "CandidateList.h"
 
+// 物理VKを文字に変換する
 // @param vk    *Physical* virtual-key code.
-WCHAR CTextService::_GetCh(WORD vk, WORD scan, BYTE vkoff)
+// @param scan_and_flag  HIWORD(lParam).
+WCHAR CTextService::_GetCh(WORD vk, WORD scan_and_flag, BYTE vkoff)
 {
 	BYTE keystate[256];
 	WCHAR ubuff;
@@ -17,6 +19,16 @@ WCHAR CTextService::_GetCh(WORD vk, WORD scan, BYTE vkoff)
 	case im_hiragana:
 	case im_katakana:
 	case im_katakana_ank:
+        switch (vk) {   // DEBUG DEBUG
+        case 'Q':
+            return L'。';
+        case 'W':
+            return L'か';
+        case 'E':
+            return L'た';
+        default:
+            break;
+        }
 		keystate[VK_CAPITAL] = 0;
 		if (abbrevmode || purgedicmode)
 		{
@@ -39,7 +51,7 @@ WCHAR CTextService::_GetCh(WORD vk, WORD scan, BYTE vkoff)
     if (vk == VK_PACKET) {
         // See https://gitlab.gnome.org/GNOME/gtk/-/blob/b6db96cd1a3de19d7b356a657b9330a292772c98/gdk/win32/gdkevents-win32.c#L2526
         // TODO: UTF-16 surrogate pair
-        retu = ToUnicode(vk, scan, keystate, &ubuff, 1, 0);
+        retu = ToUnicode(vk, scan_and_flag, keystate, &ubuff, 1, 0);
     }
     else {
         retu = ToUnicode(vk, 0, keystate, &ubuff, 1, 0);

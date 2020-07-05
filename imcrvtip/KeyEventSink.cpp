@@ -19,6 +19,9 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam,
     if (!_IsKeyboardOpen())
         return FALSE;
 
+    if (wParam == VK_PACKET)
+        return TRUE;
+
 	if (_pCandidateList && _pCandidateList->_IsContextCandidateWindow(pContext))
 	{
 		return FALSE;
@@ -128,10 +131,11 @@ IFACEMETHODIMP CTextService::OnSetFocus(BOOL fForeground)
 	return S_OK;
 }
 
+
 IFACEMETHODIMP CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam,
                                            LPARAM lParam, BOOL *pfEaten)
 {
-    if ( !pfEaten )
+    if ( !pic || !pfEaten )
         return E_INVALIDARG;
 
 	*pfEaten = _IsKeyEaten(pic, wParam, lParam);
@@ -150,20 +154,17 @@ IFACEMETHODIMP CTextService::OnTestKeyDown(ITfContext *pic, WPARAM wParam,
 	return S_OK;
 }
 
-// とりあえず OnKeyUp() からの文字入力のテスト。
-WPARAM vkCode;
 
 // @param wParam   *Physical* virtual-key code.
 IFACEMETHODIMP CTextService::OnKeyDown(ITfContext *pic, WPARAM wParam,
                                        LPARAM lParam, BOOL *pfEaten)
 {
-    if ( !pfEaten )
+    if ( !pic || !pfEaten )
         return E_INVALIDARG;
 
     *pfEaten = _IsKeyEaten(pic, wParam, lParam);
     if (*pfEaten) {
-        vkCode = wParam;
-        //_InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
+        _InvokeKeyHandler(pic, wParam, lParam & ~(KF_UP << 16), SKK_NULL);
     }
 
     return S_OK;
@@ -173,7 +174,7 @@ IFACEMETHODIMP CTextService::OnKeyDown(ITfContext *pic, WPARAM wParam,
 IFACEMETHODIMP CTextService::OnTestKeyUp(ITfContext *pic, WPARAM wParam,
                                          LPARAM lParam, BOOL *pfEaten)
 {
-    if ( !pfEaten )
+    if ( !pic || !pfEaten )
         return E_INVALIDARG;
 
     *pfEaten = _IsKeyEaten(pic, wParam, lParam);
@@ -186,12 +187,12 @@ IFACEMETHODIMP CTextService::OnTestKeyUp(ITfContext *pic, WPARAM wParam,
 IFACEMETHODIMP CTextService::OnKeyUp(ITfContext *pic, WPARAM wParam,
                                      LPARAM lParam, BOOL *pfEaten)
 {
-    if ( !pfEaten )
+    if ( !pic || !pfEaten )
         return E_INVALIDARG;
 
     *pfEaten = _IsKeyEaten(pic, wParam, lParam);
-    if (*pfEaten) {
-        _InvokeKeyHandler(pic, wParam, lParam, SKK_NULL);
+    if (*pfEaten && wParam != VK_PACKET) {
+        _InvokeKeyHandler(pic, wParam, lParam | (KF_UP << 16), SKK_NULL);
     }
 
     return S_OK;

@@ -3,6 +3,7 @@
 #include "imcrvtip.h"
 #include "EditSession.h"
 #include "TextService.h"
+#include <assert.h>
 
 class CKeyHandlerEditSession : public CEditSessionBase
 {
@@ -16,14 +17,15 @@ public:
 	}
 
 	// ITfEditSession
-	STDMETHODIMP DoEditSession(TfEditCookie ec)
+    // KeyDown と KeyUpの両方が来る
+    STDMETHODIMP DoEditSession(TfEditCookie ec)
 	{
 #ifdef _DEBUG
         _pTextService->_HandleKey(ec, _pContext, _wParam, _lParam, _bSf);
 #else
 		__try
 		{
-			_pTextService->_HandleKey(ec, _pContext, _wParam, _bSf);
+			_pTextService->_HandleKey(ec, _pContext, _wParam, _lParam, _bSf);
 		}
 		__except (EXCEPTION_EXECUTE_HANDLER)
 		{
@@ -41,10 +43,12 @@ private:
 };
 
 
+// KeyDownと KeyUp の両方来る
 // @param wParam   *Physical* virtual-key code.
 HRESULT CTextService::_InvokeKeyHandler(ITfContext *pContext, WPARAM wParam,
                                         LPARAM lParam, BYTE bSf)
 {
+    assert(pContext);
 	HRESULT hr = E_FAIL;
 
     try {
@@ -70,7 +74,8 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 	HRESULT hrc = E_ABORT;
 
     if (bSf == SKK_NULL) {
-		ch = _GetCh((WORD) wParam, HIWORD(lParam));
+        // ここで、物理VK => 文字変換
+        ch = _GetCh((WORD) wParam, HIWORD(lParam));
 		sf = _GetSf((WORD) wParam, ch);
 	}
     else {  // called by _HandleControl(), CCandidateWindow::_OnKeyDown()
