@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "InputModeWindow.h"
@@ -305,7 +305,7 @@ BOOL CInputModeWindow::_InitClass()
 	WNDCLASSEXW wcex = {};
 
 	wcex.cbSize = sizeof(wcex);
-	wcex.style = CS_VREDRAW | CS_HREDRAW;
+	wcex.style = CS_VREDRAW | CS_HREDRAW | CS_IME;
 	wcex.lpfnWndProc = CInputModeWindow::_WindowPreProc;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;

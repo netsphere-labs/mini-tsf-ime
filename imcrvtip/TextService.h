@@ -369,7 +369,7 @@ public:
 	BOOL cx_compuserdic;		//補完された見出し語の候補を表示する
 
 	//ローマ字・仮名
-	std::wstring roman;		//ローマ字
+	std::wstring roman;		//ローマ字. かな配列モードでは使わない。
 	std::wstring kana;		//仮名
 	size_t okuriidx;		//送り仮名インデックス
 	std::wstring reconvsrc;	//再変換元
@@ -383,7 +383,7 @@ public:
 	size_t candidx;			//候補インデックス
 	size_t candorgcnt;		//オリジナル見出し語の候補数
 
-	size_t cursoridx;		//カーソルインデックス
+	size_t cursoridx;		//カーソルインデックス. kana の中を指す
 
 	//候補一覧選択キー
 	WCHAR selkey[MAX_SELKEY_C][3][2];

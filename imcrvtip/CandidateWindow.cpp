@@ -94,7 +94,7 @@ BOOL CCandidateWindow::_InitClass()
 	WNDCLASSEXW wcex = {};
 
 	wcex.cbSize = sizeof(wcex);
-	wcex.style = CS_VREDRAW | CS_HREDRAW;
+    wcex.style = CS_VREDRAW | CS_HREDRAW | CS_IME;
 	wcex.lpfnWndProc = CCandidateWindow::_WindowPreProc;
 	wcex.cbClsExtra = 0;
 	wcex.cbWndExtra = 0;

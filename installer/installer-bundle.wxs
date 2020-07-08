@@ -6,11 +6,11 @@
   <?include installer-version.wxi ?>
 
   <Bundle
-    Name="CorvusSKK $(var.version) (x86/x64)"
+    Name="Netsphere MiniIME $(var.version) (x86/x64)"
     Version="$(var.version)"
     UpgradeCode="F2664253-EAE9-4ED5-AD92-03229BD8F64F"
-    Manufacturer="nathancorvussolis"
-    Copyright="© 2011 nathancorvussolis"
+    Manufacturer="Netsphere Laboratories"
+    Copyright="© 2020 Hisashi Horikawa"
     AboutUrl="https://nathancorvussolis.github.io/"
     DisableModify="button"
     Condition="VersionNT >= v6.0">

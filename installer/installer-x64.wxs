@@ -5,9 +5,9 @@
 
   <Product
     Id="*"
-    Name="CorvusSKK (x64)"
+    Name="Netsphere MiniIME (x64)"
     Version="$(var.version)"
-    Manufacturer="nathancorvussolis"
+    Manufacturer="Netsphere Laboratories"
     Language="1033"
     UpgradeCode="DBDB315C-1F74-4051-8A67-705D0FD16497">
 

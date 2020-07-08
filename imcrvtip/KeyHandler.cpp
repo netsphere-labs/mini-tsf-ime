@@ -132,7 +132,7 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 		}
 		break;
 	}
-
+/*
 	//辞書削除
 	if (purgedicmode)
 	{
@@ -154,9 +154,9 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 			break;
 		}
 	}
-
+*/
 	BOOL iscomp = _IsComposing();
-
+/*
 	//ローマ字仮名変換表を優先させる
 	switch (inputmode)
 	{
@@ -179,7 +179,8 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 	default:
 		break;
 	}
-
+*/
+/*
 	//skk-sticky-key
 	if (sf == SKK_CONV_POINT)
 	{
@@ -202,7 +203,7 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 			}
 		}
 	}
-
+*/
 	//機能処理
 	if (SUCCEEDED(_HandleControl(ec, pContext, sf, ch)))
 	{
@@ -218,7 +219,7 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 		_UpdateLanguageBar();
 		return S_OK;
 	}
-
+/*
 	//変換位置指定
 	if (ch != L'\0')
 	{
@@ -283,12 +284,11 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 			break;
 		}
 	}
-
-	if (ch >= L'\x20')
-	{
+*/
+    if (ch >= L'\x20') {
 		std::wstring romanN = roman;
 		WCHAR chON = chO;
-
+/*
 		//2文字目以降のローマ字で変換位置指定
 		if (!roman.empty() && chO != L'\0')
 		{
@@ -300,7 +300,7 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 				chO = va_itr->ch[2];
 			}
 		}
-
+*/
 		//文字処理
 		if (_HandleChar(ec, pContext, wParam, ch, chO) == E_ABORT)
 		{

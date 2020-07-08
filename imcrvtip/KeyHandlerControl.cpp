@@ -3,7 +3,8 @@
 #include "TextService.h"
 #include "CandidateList.h"
 
-HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext, BYTE sf, WCHAR ch)
+HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext,
+                                     BYTE sf, WCHAR ch)
 {
 	switch (sf)
 	{

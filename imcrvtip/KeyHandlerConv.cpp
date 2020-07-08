@@ -64,6 +64,9 @@ WCHAR CTextService::_GetCh(WORD vk, WORD scan_and_flag, BYTE vkoff)
 	return u;
 }
 
+
+// @param vk  物理VK
+// @param ch  _GetCh() の結果
 BYTE CTextService::_GetSf( WORD vk, WCHAR ch)
 {
 	BYTE k = SKK_NULL;

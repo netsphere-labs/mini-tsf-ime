@@ -1,10 +1,13 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 
-HRESULT CTextService::_HandleChar(TfEditCookie ec, ITfContext *pContext, WPARAM wParam, WCHAR ch, WCHAR chO)
+// @param wParam  物理VK. VK_PACKET を特別扱い. _GetCh() しているのに何でだ?
+// @param ch  文字. _GetCh() の結果.
+HRESULT CTextService::_HandleChar(TfEditCookie ec, ITfContext *pContext,
+                                  WPARAM wParam, WCHAR ch, WCHAR chO)
 {
-	ROMAN_KANA_CONV rkc = {};
+	//ROMAN_KANA_CONV rkc = {};
 	ASCII_JLATIN_CONV ajc = {};
 	HRESULT ret = S_OK;
 
@@ -26,8 +29,8 @@ HRESULT CTextService::_HandleChar(TfEditCookie ec, ITfContext *pContext, WPARAM 
 	case im_hiragana:
 	case im_katakana:
 	case im_katakana_ank:
-		if (abbrevmode)
-		{
+//		if (abbrevmode)
+//		{
 			kana.insert(cursoridx, 1, ch);
 			cursoridx++;
 
@@ -39,9 +42,10 @@ HRESULT CTextService::_HandleChar(TfEditCookie ec, ITfContext *pContext, WPARAM 
 			{
 				_Update(ec, pContext);
 			}
-		}
-		else
-		{
+//		}
+//		else
+//		{
+/*
 			//ローマ字仮名変換 待機処理
 			// 「ﾞ」(JIS X 0201 濁点) → 「゛」(JIS X 0208 濁点)
 			// 「か」(ka) + 「゛」(濁点) → 「か゛」(か+濁点)
@@ -278,7 +282,8 @@ HRESULT CTextService::_HandleChar(TfEditCookie ec, ITfContext *pContext, WPARAM 
 				break;
 			}
 			break;
-		}
+*/
+//        }
 		break;
 
 	case im_jlatin:
