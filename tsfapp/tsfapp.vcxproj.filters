@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
+    <Filter Include="Text Service Files">
+      <UniqueIdentifier>{858b4807-863f-4fdc-8d80-3e669448ed9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="context.cpp">
@@ -45,11 +48,98 @@
     <ClCompile Include="tsfwnd.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\imcrvtip\KeyEventSink.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\input.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CandidateKeyHandler.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CandidateList.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CandidatePaint.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CandidateUIElement.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CandidateWindow.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\Compartment.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\CompartmentEventSink.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\Composition.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\DisplayAttributeProvider.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\FnConfig.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\FunctionProvider.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\Globals.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\InputModeWindow.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyEventSink.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandler.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandlerChar.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandlerControl.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandlerComposition.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandlerConv.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\KeyHandlerDictionary.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\LanguageBar.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\Register.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\Server.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\TextEditSink.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\TextService.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\ThreadFocusSink.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imcrvtip\ThreadMgrEventSink.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\common.cpp">
+      <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\configxml.cpp">
+      <Filter>Text Service Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -78,6 +168,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imcrvtip\DisplayAttributeInfo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

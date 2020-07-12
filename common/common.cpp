@@ -1,6 +1,7 @@
-﻿
+
 #include "common.h"
 
+#include <bcrypt.h>
 #pragma comment(lib, "bcrypt.lib")
 
 #define CCSUTF16 L", ccs=UTF-16LE"

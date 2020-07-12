@@ -81,12 +81,14 @@
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Windows</SubSystem>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;d2d1.lib;dwrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -97,6 +99,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <TargetMachine>MachineX86</TargetMachine>
@@ -114,25 +118,58 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Link>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comctl32.lib;d2d1.lib;dwrite.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <ForcedIncludeFiles>stdafx.h</ForcedIncludeFiles>
+      <AdditionalIncludeDirectories>$(SolutionDir)common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\common\common.cpp" />
+    <ClCompile Include="..\common\configxml.cpp" />
+    <ClCompile Include="..\imcrvtip\CandidateKeyHandler.cpp" />
+    <ClCompile Include="..\imcrvtip\CandidateList.cpp" />
+    <ClCompile Include="..\imcrvtip\CandidatePaint.cpp" />
+    <ClCompile Include="..\imcrvtip\CandidateUIElement.cpp" />
+    <ClCompile Include="..\imcrvtip\CandidateWindow.cpp" />
+    <ClCompile Include="..\imcrvtip\Compartment.cpp" />
+    <ClCompile Include="..\imcrvtip\CompartmentEventSink.cpp" />
+    <ClCompile Include="..\imcrvtip\Composition.cpp" />
+    <ClCompile Include="..\imcrvtip\DisplayAttributeProvider.cpp" />
+    <ClCompile Include="..\imcrvtip\FnConfig.cpp" />
+    <ClCompile Include="..\imcrvtip\FunctionProvider.cpp" />
+    <ClCompile Include="..\imcrvtip\Globals.cpp" />
+    <ClCompile Include="..\imcrvtip\input.cpp" />
+    <ClCompile Include="..\imcrvtip\InputModeWindow.cpp" />
     <ClCompile Include="..\imcrvtip\KeyEventSink.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandler.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandlerChar.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandlerComposition.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandlerControl.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandlerConv.cpp" />
+    <ClCompile Include="..\imcrvtip\KeyHandlerDictionary.cpp" />
+    <ClCompile Include="..\imcrvtip\LanguageBar.cpp" />
+    <ClCompile Include="..\imcrvtip\Register.cpp" />
+    <ClCompile Include="..\imcrvtip\Server.cpp" />
+    <ClCompile Include="..\imcrvtip\TextEditSink.cpp" />
+    <ClCompile Include="..\imcrvtip\TextService.cpp" />
+    <ClCompile Include="..\imcrvtip\ThreadFocusSink.cpp" />
+    <ClCompile Include="..\imcrvtip\ThreadMgrEventSink.cpp" />
     <ClCompile Include="context.cpp" />
     <ClCompile Include="dataobj.cpp" />
     <ClCompile Include="funcprov.cpp" />
     <ClCompile Include="persist.cpp" />
     <ClCompile Include="propldr.cpp" />
-    <ClCompile Include="stdafx.cpp" >
+    <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">Create</PrecompiledHeader>
@@ -149,6 +186,7 @@
     <ClCompile Include="tsfwnd.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\imcrvtip\DisplayAttributeInfo.h" />
     <ClInclude Include="afxres.h" />
     <ClInclude Include="dataobj.h" />
     <ClInclude Include="globals.h" />

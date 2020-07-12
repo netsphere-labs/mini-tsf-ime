@@ -21,6 +21,7 @@
 
 #include "TSFWnd.h"
 #include "Globals.h"
+#include <commdlg.h> // OPENFILENAME
 
 /**************************************************************************
    local function prototypes

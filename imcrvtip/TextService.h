@@ -1,5 +1,10 @@
 #pragma once
 
+#include <ctffunc.h>
+#include <d2d1.h> // Direct2D
+#include <atlcomcli.h>
+#include <dwrite.h> // DirectWrite
+
 #include "imcrvtip.h"
 #include "convtype.h"
 #include "parseskkdic.h"
