@@ -21,7 +21,7 @@ enum InputMode
 #define VKEYMAPNUM		0x100	// 0x00-0xFF
 
 //skk function code
-#define SKK_NULL		0x00	// NUL
+#define SKK_NULL		0x00	// NUL  図形文字キー
 
 #define SKK_KANA		0x71	// かな／カナ	q
 #define SKK_CONV_CHAR	0x11	// ｶﾅ全英変換	c-q
