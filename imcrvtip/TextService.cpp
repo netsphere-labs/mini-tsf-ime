@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "LanguageBar.h"
@@ -163,7 +163,7 @@ STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
 				      DWORD dwFlags)
 {
     assert(ptim);
-  
+
     _pThreadMgr = ptim;
     _ClientId = tid;
 
@@ -215,7 +215,8 @@ STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
 		goto exit;
 	}
 
-	_KeyboardOpenCloseChanged(FALSE);
+    // この中で, 設定ファイルが読み込まれる.
+    _KeyboardOpenCloseChanged(FALSE);
 
 	return S_OK;
 
