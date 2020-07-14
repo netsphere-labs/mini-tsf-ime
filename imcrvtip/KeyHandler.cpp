@@ -76,7 +76,10 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
     if (bSf == SKK_NULL) {
         // ここで、物理VK => 文字変換
         ch = _GetCh((WORD) wParam, HIWORD(lParam));
-		sf = _GetSf((WORD) wParam, ch);
+        if (wParam == VK_SPACE)
+            sf = SKK_NEXT_CAND; // DEBUG
+		else
+            sf = _GetSf((WORD) wParam, ch);
 	}
     else {  // called by _HandleControl(), CCandidateWindow::_OnKeyDown()
 		ch = WCHAR_MAX;
