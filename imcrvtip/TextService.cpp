@@ -153,15 +153,19 @@ STDAPI_(ULONG) CTextService::Release()
 	return _cRef;
 }
 
-STDAPI CTextService::Activate(ITfThreadMgr *ptim, TfClientId tid)
+STDMETHODIMP CTextService::Activate(ITfThreadMgr *ptim, TfClientId tid)
 {
 	return ActivateEx(ptim, tid, 0);
 }
 
-STDAPI CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid, DWORD dwFlags)
+// ITfTextInputProcessorEx
+STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
+				      DWORD dwFlags)
 {
-	_pThreadMgr = ptim;
-	_ClientId = tid;
+    assert(ptim);
+  
+    _pThreadMgr = ptim;
+    _ClientId = tid;
 
 	if (!_IsKeyboardOpen())
 	{

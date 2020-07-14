@@ -25,17 +25,20 @@
    Local Function Prototypes
 **************************************************************************/
 
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 
 /**************************************************************************
    Global Variables
 **************************************************************************/
 
 ITfThreadMgr    *g_pThreadMgr = nullptr;
+CTextService* g_textService = nullptr;
+
 
 // @return WM_QUIT の wParam の値
 int main_loop()
 {
+    assert( g_pThreadMgr );
+  
     // TSFは、アプリケーションのメッセージポンプの前に、処理を行う
     // => ITfMessagePump を使うことで, TSFの処理をブロックできる.
     bool use_tsf_message_pump = true;
@@ -121,7 +124,7 @@ int main_loop()
 int WINAPI WinMain( HINSTANCE hInstance,
                     HINSTANCE hPrevInstance,
                     LPSTR lpCmdLine,
-                    int nCmdShow)
+                    int nCmdShow )
 {
     CTSFMainWnd *pMainWnd;
     int         nReturn = 0;
@@ -131,10 +134,15 @@ int WINAPI WinMain( HINSTANCE hInstance,
     pMainWnd = new CTSFMainWnd(hInstance);
     if(NULL == pMainWnd)
         return 0;
-
+    assert( g_pThreadMgr );
+    
+    g_textService = new CTextService();
+    g_textService->ActivateEx(g_pThreadMgr, pMainWnd->m_tfClientID, 0);
+    
     if (pMainWnd->Initialize(nCmdShow))
-        nReturn = main_loop();
+        nReturn = main_loop(pMainWnd->m_pTSFEditWnd);
 
+    delete g_textService;
     delete pMainWnd;
     CoUninitialize();
 

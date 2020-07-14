@@ -75,6 +75,9 @@ class CTSFEditWnd : public ITextStoreACP2, // Windows 8 [desktop | UWP ]
                     public ITfContextOwnerCompositionSink,
                     public ITfFunctionProvider
 {
+public:
+    ITfContext              *m_pContext;
+
 private:
     DWORD                   m_ObjRefCount;
     HINSTANCE               m_hInst;
@@ -86,7 +89,6 @@ private:
     TfClientId              m_tfClientID;
     ITfDocumentMgr          *m_pDocMgr;
     ITfDocumentMgr          *m_pPrevDocMgr;
-    ITfContext              *m_pContext;
     TfEditCookie            m_EditCookie;
     ADVISE_SINK             m_AdviseSink;
     BOOL                    m_fLocked;
