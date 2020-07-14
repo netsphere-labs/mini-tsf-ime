@@ -1,6 +1,7 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
+#include <assert.h>
 
 HRESULT CTextService::_SetCompartment(REFGUID rguid, const VARIANT *pvar)
 {
@@ -53,6 +54,8 @@ HRESULT CTextService::_GetCompartment(REFGUID rguid, VARIANT *pvar)
 
 BOOL CTextService::_IsKeyboardDisabled()
 {
+    assert( _pThreadMgr );
+
 	BOOL fDisabled = FALSE;
 
 	CComPtr<ITfDocumentMgr> pDocumentMgr;

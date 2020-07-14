@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
    THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
    ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
@@ -20,40 +20,46 @@
 **************************************************************************/
 
 #include "TSFWnd.h"
+#include <assert.h>
+#include "../imcrvtip/TextService.h"
 
 /**************************************************************************
    Local Function Prototypes
 **************************************************************************/
 
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int);
 
 /**************************************************************************
    Global Variables
 **************************************************************************/
 
 ITfThreadMgr    *g_pThreadMgr = nullptr;
+CTextService* g_textService = nullptr;
 
 // @return WM_QUIT の wParam の値
-int main_loop()
+int main_loop( CTSFEditWnd* editWnd )
 {
+    assert( g_pThreadMgr );
+    assert( g_textService );
+    assert( editWnd );
+
     // TSFは、アプリケーションのメッセージポンプの前に、処理を行う
     // => ITfMessagePump を使うことで, TSFの処理をブロックできる.
     bool use_tsf_message_pump = true;
-    ITfKeystrokeMgr* pKeyMgr = nullptr;
+    //ITfKeystrokeMgr* pKeyMgr = nullptr;
     ITfMessagePump* pMsgPump = nullptr;
-
+/*
     // get the keystroke manager interfce
     if (FAILED(g_pThreadMgr->QueryInterface(IID_ITfKeystrokeMgr,
                (void**)&pKeyMgr)))
         use_tsf_message_pump = false;
-    else {
+    else { */
         if (FAILED(g_pThreadMgr->QueryInterface(IID_ITfMessagePump,
                    (void**)&pMsgPump))) {
             use_tsf_message_pump = false;
-            pKeyMgr->Release();
-            pKeyMgr = nullptr;
+            //pKeyMgr->Release();
+            //pKeyMgr = nullptr;
         }
-    }
+//    }
 
     MSG     msg;
     while (TRUE) {
@@ -63,9 +69,13 @@ int main_loop()
         if (use_tsf_message_pump) {
             BOOL    fEaten;
 
-            /*
-            Get the next message in the queue. fResult receives FALSE if WM_QUIT is encountered
-            */
+            BOOL focus = FALSE;
+            editWnd->m_pThreadMgr->IsThreadFocus(&focus);
+            if (!focus)
+                OutputDebugStringA("XX - Not focused on. Something wrong.");
+
+            // Get the next message in the queue. fResult receives FALSE if
+            // WM_QUIT is encountered
             fResult = TRUE;
             if (FAILED(pMsgPump->GetMessage(&msg, NULL, 0, 0, &fResult)))
                 fResult = -1;
@@ -73,19 +83,17 @@ int main_loop()
                 break;
 
             if (WM_KEYDOWN == msg.message) {
-                //continue;
                 // does an ime want it?
-                if (pKeyMgr->TestKeyDown(msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten &&
-                    pKeyMgr->KeyDown(msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten)
+                if (g_textService->OnTestKeyDown(editWnd->m_pContext, msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten &&
+                    g_textService->OnKeyDown(editWnd->m_pContext, msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten)
                 {
                     continue;
                 }
             }
             else if (WM_KEYUP == msg.message) {
-                //continue;
                 // does an ime want it?
-                if (pKeyMgr->TestKeyUp(msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten &&
-                    pKeyMgr->KeyUp(msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten)
+                if (g_textService->OnTestKeyUp(editWnd->m_pContext, msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten &&
+                    g_textService->OnKeyUp(editWnd->m_pContext, msg.wParam, msg.lParam, &fEaten) == S_OK && fEaten)
                 {
                     continue;
                 }
@@ -101,15 +109,15 @@ int main_loop()
         DispatchMessage(&msg);
     }
 
-    if (pKeyMgr)
-        pKeyMgr->Release();
+    //if (pKeyMgr)
+    //    pKeyMgr->Release();
     if (pMsgPump)
         pMsgPump->Release();
 
     if (WM_QUIT == msg.message)
         return (int)msg.wParam;
     else
-        return 0;
+        return -1;
 }
 
 
@@ -130,10 +138,12 @@ int WINAPI WinMain( HINSTANCE hInstance,
 
     pMainWnd = new CTSFMainWnd(hInstance);
     if(NULL == pMainWnd)
-        return 0;
+        return -1;
+
+    g_textService = new CTextService();
 
     if (pMainWnd->Initialize(nCmdShow))
-        nReturn = main_loop();
+        nReturn = main_loop( pMainWnd->m_pTSFEditWnd );
 
     delete pMainWnd;
     CoUninitialize();

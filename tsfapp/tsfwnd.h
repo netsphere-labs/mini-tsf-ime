@@ -40,18 +40,20 @@
 
 class CTSFMainWnd
 {
+public:
+    CTSFEditWnd* m_pTSFEditWnd;
+    TfClientId      m_tfClientID;
+
 private:
     HINSTANCE       m_hInst;
     HWND            m_hWnd;
-    CTSFEditWnd     *m_pTSFEditWnd;
-    TfClientId      m_tfClientID;
-   
+
 public:
     CTSFMainWnd(HINSTANCE hInstance);
     ~CTSFMainWnd();
-    
+
     BOOL Initialize(int nCmdShow);
-   
+
 private:
     static LRESULT CALLBACK _WndProc(HWND hWnd, UINT uMessage, WPARAM wParam, LPARAM lParam);
     void _CleanupEditWnd(BOOL fNuke);

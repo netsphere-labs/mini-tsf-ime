@@ -1,4 +1,4 @@
-﻿
+
 #include "input.h"
 
 // input.dll dummy functions
@@ -10,7 +10,7 @@ UINT WINAPI EnumEnabledLayoutOrTip(
 	_Out_    LAYOUTORTIPPROFILE *pLayoutOrTipProfile,
 	_In_     UINT               uBufLength
 ) {
-	return 0;
+    return 0;
 }
 
 UINT WINAPI EnumLayoutOrTipForSetup(
@@ -19,14 +19,14 @@ UINT WINAPI EnumLayoutOrTipForSetup(
 	_In_  UINT        uBufLength,
 	_In_  DWORD       dwFlags
 ) {
-	return 0;
+    return 0;
 }
 
 BOOL WINAPI InstallLayoutOrTip(
 	_In_ LPCWSTR psz,
 	_In_ DWORD   dwFlags
 ) {
-	return TRUE;
+    return TRUE;
 }
 
 BOOL WINAPI InstallLayoutOrTipUserReg(
@@ -36,14 +36,14 @@ BOOL WINAPI InstallLayoutOrTipUserReg(
 	_In_     LPCWSTR psz,
 	_In_     DWORD   dwFlags
 ) {
-	return TRUE;
+    return TRUE;
 }
 
 HRESULT WINAPI QueryLayoutOrTipString(
 	_In_ LPCWSTR psz,
 	_In_ DWORD   dwFlags
 ) {
-	return S_OK;
+    return S_OK;
 }
 
 HRESULT WINAPI QueryLayoutOrTipStringUserReg(
@@ -53,28 +53,28 @@ HRESULT WINAPI QueryLayoutOrTipStringUserReg(
 	_In_ LPCWSTR psz,
 	_In_ DWORD   dwFlags
 ) {
-	return S_OK;
+    return S_OK;
 }
 
 BOOL WINAPI SaveDefaultUserInputSettings(
 	_In_ HWND hwndParent,
 	_In_ HKEY hSourceRegKey
 ) {
-	return TRUE;
+    return TRUE;
 }
 
 BOOL WINAPI SaveSystemAcctInputSettings(
 	_In_ HWND hwndParent,
 	_In_ HKEY hSourceRegKey
 ) {
-	return TRUE;
+    return TRUE;
 }
 
 BOOL WINAPI SetDefaultLayoutOrTip(
 	_In_ LPCWSTR psz,
 	_In_ DWORD   dwFlags
 ) {
-	return TRUE;
+    return TRUE;
 }
 
 BOOL WINAPI SetDefaultLayoutOrTipUserReg(
@@ -84,5 +84,5 @@ BOOL WINAPI SetDefaultLayoutOrTipUserReg(
 	_In_     LPCWSTR psz,
 	_In_     DWORD   dwFlags
 ) {
-	return TRUE;
+    return TRUE;
 }
