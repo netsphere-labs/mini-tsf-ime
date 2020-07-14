@@ -1,4 +1,4 @@
-/**************************************************************************
+﻿/**************************************************************************
    THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
    ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
@@ -34,6 +34,7 @@
 
 ITfThreadMgr    *g_pThreadMgr = nullptr;
 CTextService* g_textService = nullptr;
+
 
 // @return WM_QUIT の wParam の値
 int main_loop( CTSFEditWnd* editWnd )
@@ -129,7 +130,7 @@ int main_loop( CTSFEditWnd* editWnd )
 int WINAPI WinMain( HINSTANCE hInstance,
                     HINSTANCE hPrevInstance,
                     LPSTR lpCmdLine,
-                    int nCmdShow)
+                    int nCmdShow )
 {
     CTSFMainWnd *pMainWnd;
     int         nReturn = 0;
@@ -140,14 +141,16 @@ int WINAPI WinMain( HINSTANCE hInstance,
     if(NULL == pMainWnd)
         return -1;
 
+    assert( g_pThreadMgr );
     g_textService = new CTextService();
+    g_textService->ActivateEx(g_pThreadMgr, pMainWnd->m_tfClientID, 0);
 
     if (pMainWnd->Initialize(nCmdShow))
         nReturn = main_loop( pMainWnd->m_pTSFEditWnd );
 
+    delete g_textService;
     delete pMainWnd;
     CoUninitialize();
 
     return nReturn;
 }
-

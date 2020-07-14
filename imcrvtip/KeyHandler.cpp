@@ -378,6 +378,7 @@ void CTextService::_KeyboardOpenCloseChanged(BOOL showinputmode)
 		_InitPreservedKey(1);	//OFF
 		_InitPreservedKey(0);	//ON 未使用だがキーは拾う 重複するキーは上書きされない
 
+        // 設定ファイルを読み込む
 		_LoadCKeyMap();
 		_LoadVKeyMap();
 		_LoadConvPoint();

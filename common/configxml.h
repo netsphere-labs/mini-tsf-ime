@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 //tag
 
@@ -207,7 +207,9 @@ typedef std::vector<APPDATAXMLROW> APPDATAXMLLIST;
 
 HRESULT CreateStreamReader(LPCWSTR path, IXmlReader **ppReader, IStream **ppFileStream);
 
+// 設定ファイルを読み込む
 HRESULT ReadList(LPCWSTR path, LPCWSTR section, APPDATAXMLLIST &list);
+
 HRESULT ReadValue(LPCWSTR path, LPCWSTR section, LPCWSTR key, std::wstring &strxmlval, LPCWSTR defval = L"");
 
 HRESULT CreateStreamWriter(LPCWSTR path, IXmlWriter **ppWriter, IStream **ppFileStream);

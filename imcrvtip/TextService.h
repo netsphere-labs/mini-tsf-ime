@@ -38,17 +38,17 @@ public:
 	STDMETHODIMP_(ULONG) AddRef(void);
 	STDMETHODIMP_(ULONG) Release(void);
 
-	// ITfTextInputProcessor
-	STDMETHODIMP Activate(ITfThreadMgr *ptim, TfClientId tid);
-	STDMETHODIMP Deactivate();
+    // ITfTextInputProcessor
+    STDMETHODIMP Activate(ITfThreadMgr *ptim, TfClientId tid);
+    STDMETHODIMP Deactivate();
 
-	// ITfTextInputProcessorEx
-	STDMETHODIMP ActivateEx(ITfThreadMgr *ptim, TfClientId tid, DWORD dwFlags);
+    // ITfTextInputProcessorEx
+    STDMETHODIMP ActivateEx(ITfThreadMgr *ptim, TfClientId tid, DWORD dwFlags);
 
-	// ITfThreadMgrEventSink
-	STDMETHODIMP OnInitDocumentMgr(ITfDocumentMgr *pdim);
-	STDMETHODIMP OnUninitDocumentMgr(ITfDocumentMgr *pdim);
-	STDMETHODIMP OnSetFocus(ITfDocumentMgr *pdimFocus, ITfDocumentMgr *pdimPrevFocus);
+    // ITfThreadMgrEventSink
+    STDMETHODIMP OnInitDocumentMgr(ITfDocumentMgr *pdim);
+    STDMETHODIMP OnUninitDocumentMgr(ITfDocumentMgr *pdim);
+    STDMETHODIMP OnSetFocus(ITfDocumentMgr *pdimFocus, ITfDocumentMgr *pdimPrevFocus);
 	STDMETHODIMP OnPushContext(ITfContext *pic);
 	STDMETHODIMP OnPopContext(ITfContext *pic);
 

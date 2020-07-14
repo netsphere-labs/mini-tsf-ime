@@ -12,7 +12,9 @@ STDAPI CTextService::OnUninitDocumentMgr(ITfDocumentMgr *pdim)
 	return S_OK;
 }
 
-STDAPI CTextService::OnSetFocus(ITfDocumentMgr *pdim, ITfDocumentMgr *pdimPrevFocus)
+// ITfThreadMgrEventSink
+STDMETHODIMP CTextService::OnSetFocus(ITfDocumentMgr *pdim,
+				      ITfDocumentMgr *pdimPrevFocus)
 {
 	_InitTextEditSink(pdim);
 

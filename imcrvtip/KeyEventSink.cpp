@@ -126,6 +126,7 @@ BOOL CTextService::_IsKeyEaten(ITfContext *pContext, WPARAM wParam,
 	return FALSE;
 }
 
+// ITfKeyEventSink
 IFACEMETHODIMP CTextService::OnSetFocus(BOOL fForeground)
 {
 	return S_OK;

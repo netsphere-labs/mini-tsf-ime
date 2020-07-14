@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "LanguageBar.h"
@@ -153,15 +153,19 @@ STDAPI_(ULONG) CTextService::Release()
 	return _cRef;
 }
 
-STDAPI CTextService::Activate(ITfThreadMgr *ptim, TfClientId tid)
+STDMETHODIMP CTextService::Activate(ITfThreadMgr *ptim, TfClientId tid)
 {
 	return ActivateEx(ptim, tid, 0);
 }
 
-STDAPI CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid, DWORD dwFlags)
+// ITfTextInputProcessorEx
+STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
+				      DWORD dwFlags)
 {
-	_pThreadMgr = ptim;
-	_ClientId = tid;
+    assert(ptim);
+
+    _pThreadMgr = ptim;
+    _ClientId = tid;
 
 	if (!_IsKeyboardOpen())
 	{
@@ -211,7 +215,8 @@ STDAPI CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid, DWORD dwFlag
 		goto exit;
 	}
 
-	_KeyboardOpenCloseChanged(FALSE);
+    // この中で, 設定ファイルが読み込まれる.
+    _KeyboardOpenCloseChanged(FALSE);
 
 	return S_OK;
 
