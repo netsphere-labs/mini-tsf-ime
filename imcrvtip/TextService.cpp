@@ -4,6 +4,8 @@
 #include "LanguageBar.h"
 #include "CandidateList.h"
 #include "InputModeWindow.h"
+#include <assert.h>
+
 
 CTextService::CTextService()
 {

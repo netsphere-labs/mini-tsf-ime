@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
    THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
    ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
@@ -71,7 +71,7 @@ int main_loop( CTSFEditWnd* editWnd )
             BOOL    fEaten;
 
             BOOL focus = FALSE;
-            editWnd->m_pThreadMgr->IsThreadFocus(&focus);
+            g_pThreadMgr->IsThreadFocus(&focus);
             if (!focus)
                 OutputDebugStringA("XX - Not focused on. Something wrong.");
 
