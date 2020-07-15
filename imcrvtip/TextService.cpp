@@ -1,4 +1,4 @@
-
+﻿// -*- coding:utf-8-with-signature -*-
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "LanguageBar.h"
@@ -197,10 +197,9 @@ STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
 		}
 	}
 
-	if (!_InitLanguageBar())
-	{
-		goto exit;
-	}
+    if (!_InitLanguageBar()) {
+        // goto exit;   -- 失敗しても気にしない
+    }
 
 	if (!_InitKeyEventSink())
 	{
