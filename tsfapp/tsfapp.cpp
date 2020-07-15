@@ -140,16 +140,15 @@ int WINAPI WinMain( HINSTANCE hInstance,
     pMainWnd = new CTSFMainWnd(hInstance);
     if(NULL == pMainWnd)
         return -1;
-
-    assert( g_pThreadMgr );
     g_textService = new CTextService();
-    g_textService->ActivateEx(g_pThreadMgr, pMainWnd->m_tfClientID, 0);
 
-    if (pMainWnd->Initialize(nCmdShow))
-        nReturn = main_loop( pMainWnd->m_pTSFEditWnd );
+    if (pMainWnd->Initialize(nCmdShow)) {
+        g_textService->internal_activate(g_pThreadMgr, pMainWnd->m_tfClientID);
+        nReturn = main_loop(pMainWnd->m_pTSFEditWnd);
+    }
 
-    delete g_textService;
     delete pMainWnd;
+    delete g_textService;
     CoUninitialize();
 
     return nReturn;

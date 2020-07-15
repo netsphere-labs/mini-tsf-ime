@@ -224,6 +224,8 @@ public:
 	HRESULT _GetRangeText(ITfRange *pRange, std::wstring &text);
 	HRESULT _SetResult(const std::wstring &fnsearchkey, const CANDIDATES &fncandidates, UINT index);
 
+    bool internal_activate(ITfThreadMgr* ptim, TfClientId tid);
+
 private:
 	LONG _cRef;
 

@@ -1,4 +1,4 @@
-﻿// -*- coding:utf-8-with-signature -*-
+// -*- coding:utf-8-with-signature -*-
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "LanguageBar.h"
@@ -13,7 +13,7 @@ CTextService::CTextService()
 
 	_cRef = 1;
 
-	_pThreadMgr = nullptr;
+    //_pThreadMgr = nullptr;
 	_ClientId = TF_CLIENTID_NULL;
 	_dwThreadMgrEventSinkCookie = TF_INVALID_COOKIE;
 	_dwThreadFocusSinkCookie = TF_INVALID_COOKIE;
@@ -160,64 +160,59 @@ STDMETHODIMP CTextService::Activate(ITfThreadMgr *ptim, TfClientId tid)
 	return ActivateEx(ptim, tid, 0);
 }
 
-// ITfTextInputProcessorEx
-STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
-				      DWORD dwFlags)
+
+// @return If succeeded, true.
+bool CTextService::internal_activate(ITfThreadMgr* ptim, TfClientId tid)
 {
     assert(ptim);
 
     _pThreadMgr = ptim;
     _ClientId = tid;
 
-	if (!_IsKeyboardOpen())
-	{
-		_KeyboardSetDefaultMode();
-	}
+    if (!_IsKeyboardOpen())
+        _KeyboardSetDefaultMode();
 
-	if (!_InitThreadMgrEventSink())
-	{
-		goto exit;
-	}
+    if (!_InitThreadMgrEventSink())
+        return false;
 
-	if (!_InitThreadFocusSink())
-	{
-		goto exit;
-	}
+    if (!_InitThreadFocusSink())
+        return false;
 
-	if (!_InitCompartmentEventSink())
-	{
-		goto exit;
-	}
+    if (!_InitCompartmentEventSink())
+        return false;
 
-	{
-		CComPtr<ITfDocumentMgr> pDocumentMgr;
-		if (SUCCEEDED(_pThreadMgr->GetFocus(&pDocumentMgr)) && (pDocumentMgr != nullptr))
-		{
-			_InitTextEditSink(pDocumentMgr);
-		}
-	}
-
-    if (!_InitLanguageBar()) {
-        // goto exit;   -- 失敗しても気にしない
+    {
+        CComPtr<ITfDocumentMgr> pDocumentMgr;
+        if ( SUCCEEDED(_pThreadMgr->GetFocus(&pDocumentMgr)) &&
+             pDocumentMgr != nullptr )
+            _InitTextEditSink(pDocumentMgr);
     }
 
-	if (!_InitKeyEventSink())
-	{
-		goto exit;
-	}
-
-	if (!_InitDisplayAttributeGuidAtom())
-	{
-		goto exit;
-	}
-
-	if (!_InitFunctionProvider())
-	{
-		goto exit;
-	}
+    if (!_InitDisplayAttributeGuidAtom())
+        return false;
 
     // この中で, 設定ファイルが読み込まれる.
     _KeyboardOpenCloseChanged(FALSE);
+
+    return true;
+}
+
+
+// ITfTextInputProcessorEx
+STDMETHODIMP CTextService::ActivateEx(ITfThreadMgr *ptim, TfClientId tid,
+				      DWORD dwFlags)
+{
+    if (!internal_activate(ptim, tid))
+        goto exit;
+
+    if (!_InitLanguageBar())
+        goto exit;
+
+    if (!_InitKeyEventSink())
+        goto exit;
+
+	if (!_InitFunctionProvider())
+		goto exit;
 
 	return S_OK;
 
@@ -225,6 +220,7 @@ exit:
 	Deactivate();
 	return E_FAIL;
 }
+
 
 STDAPI CTextService::Deactivate()
 {

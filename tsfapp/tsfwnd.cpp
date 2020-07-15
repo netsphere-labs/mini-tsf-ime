@@ -65,7 +65,8 @@ CTSFMainWnd::~CTSFMainWnd()
     
     if(g_pThreadMgr)
     {
-        g_pThreadMgr->Deactivate();
+        if (FAILED(g_pThreadMgr->Deactivate()))
+            abort();
         
         g_pThreadMgr->Release();
         g_pThreadMgr = NULL;
@@ -77,26 +78,27 @@ CTSFMainWnd::~CTSFMainWnd()
    CTSFMainWnd::Initialize()
 
 **************************************************************************/
-
+// @return If succeeded, true.
 BOOL CTSFMainWnd::Initialize(int nCmdShow)
 {
     HRESULT hr;
-#if 1
+
     hr = CoCreateInstance(  CLSID_TF_ThreadMgr, 
                             NULL, 
                             CLSCTX_INPROC_SERVER, 
                             IID_ITfThreadMgr, 
                             (void**)&g_pThreadMgr);
-#else
-    hr = TF_CreateThreadMgr(&g_pThreadMgr);
-#endif
-    if(SUCCEEDED(hr))
-    {
-        hr = g_pThreadMgr->Activate(&m_tfClientID);
+    if (FAILED(hr))
+        return FALSE;
 
-        if(SUCCEEDED(hr))
-        {
-            WNDCLASS  wc;
+    hr = g_pThreadMgr->Activate(&m_tfClientID);
+    if (FAILED(hr)) {
+        g_pThreadMgr->Release();
+        g_pThreadMgr = nullptr;
+        return FALSE;
+    }
+
+    WNDCLASS  wc;
 
             ZeroMemory(&wc, sizeof(wc));
    
@@ -126,7 +128,6 @@ BOOL CTSFMainWnd::Initialize(int nCmdShow)
                                             NULL,
                                             m_hInst,
                                             (LPVOID)this);
-
                 if(NULL != m_hWnd)
                 {
                     ShowWindow(m_hWnd, nCmdShow);
@@ -135,8 +136,6 @@ BOOL CTSFMainWnd::Initialize(int nCmdShow)
                     return TRUE;
                 }
             }
-        }
-    }
 
     return FALSE;
 }
