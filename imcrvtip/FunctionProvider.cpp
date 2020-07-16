@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "EditSession.h"
@@ -103,12 +103,12 @@ STDAPI CTextService::GetDisplayName(BSTR *pbstrName)
 	return S_OK;
 }
 
+
 STDAPI CTextService::Show(HWND hwndParent, LANGID langid, REFGUID rguidProfile)
 {
-	if (!IsEqualGUID(rguidProfile, c_guidProfile))
-	{
-		return E_INVALIDARG;
-	}
+    if (!IsEqualGUID(rguidProfile, c_guidRomaKanaProfile) &&
+        !IsEqualGUID(rguidProfile, c_guidKanaLayoutProfile) )
+        return E_INVALIDARG;
 
 	_StartConfigure();
 

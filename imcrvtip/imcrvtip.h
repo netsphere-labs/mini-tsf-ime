@@ -127,7 +127,11 @@ extern LPCWSTR InputModeWindowClass;
 extern HINSTANCE g_hInst;
 
 extern const CLSID c_clsidTextService;
-extern const GUID c_guidProfile;
+
+// Layouts
+extern const GUID c_guidRomaKanaProfile;
+extern const GUID c_guidKanaLayoutProfile;
+
 extern const GUID c_guidPreservedKeyOn;
 extern const GUID c_guidPreservedKeyOff;
 extern const GUID c_guidLangBarItemButton;

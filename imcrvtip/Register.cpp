@@ -1,6 +1,9 @@
-﻿
+
 #include "imcrvtip.h"
 #include "input.h"
+#include <assert.h>
+#include <string>
+using namespace std;
 
 #define CLSID_STRLEN	38
 #define TEXTSERVICE_MODEL	L"Apartment"
@@ -27,25 +30,39 @@ static const GUID c_guidCategory8[] =
 	GUID_TFCAT_TIPCAP_SYSTRAYSUPPORT
 };
 
+
+// @return If succeeded, true.
 BOOL RegisterProfiles()
 {
 	HRESULT hr = E_FAIL;
 	WCHAR fileName[MAX_PATH];
 
 	CComPtr<ITfInputProcessorProfileMgr> pInputProcessorProfileMgr;
-	hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pInputProcessorProfileMgr));
-	if (SUCCEEDED(hr) && (pInputProcessorProfileMgr != nullptr))
-	{
-		ZeroMemory(fileName, sizeof(fileName));
-		GetModuleFileNameW(g_hInst, fileName, _countof(fileName));
+    hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr,
+                          CLSCTX_INPROC_SERVER,
+                          IID_PPV_ARGS(&pInputProcessorProfileMgr));
+    if (FAILED(hr))
+        return FALSE;
 
-		hr = pInputProcessorProfileMgr->RegisterProfile(c_clsidTextService, 
-			TEXTSERVICE_LANGID, c_guidProfile,
-			TextServiceDesc, (ULONG)wcslen(TextServiceDesc), fileName, (ULONG)wcslen(fileName), TEXTSERVICE_ICON_INDEX,
+    ZeroMemory(fileName, sizeof(fileName));
+    GetModuleFileNameW(g_hInst, fileName, _countof(fileName));
+
+    // ITfInputProcessorProfiles::Register() は廃れた.
+    wstring desc = wstring(TextServiceDesc) + L" R漢";
+    hr = pInputProcessorProfileMgr->RegisterProfile(c_clsidTextService,
+            TEXTSERVICE_LANGID, c_guidRomaKanaProfile,
+            desc.c_str(), (ULONG) desc.length(), fileName, (ULONG)wcslen(fileName), TEXTSERVICE_ICON_INDEX,
 			nullptr, 0, TRUE, 0);
-	}
+    if (FAILED(hr))
+        return FALSE;
 
-	return SUCCEEDED(hr);
+    desc = wstring(TextServiceDesc) + L" かな";
+    hr = pInputProcessorProfileMgr->RegisterProfile(c_clsidTextService,
+            TEXTSERVICE_LANGID, c_guidKanaLayoutProfile,
+            desc.c_str(), (ULONG) desc.length(), fileName, (ULONG)wcslen(fileName), TEXTSERVICE_ICON_INDEX,
+			nullptr, 0, TRUE, 0);
+
+    return SUCCEEDED(hr);
 }
 
 void UnregisterProfiles()
@@ -53,11 +70,17 @@ void UnregisterProfiles()
 	HRESULT hr = E_FAIL;
 
 	CComPtr<ITfInputProcessorProfileMgr> pInputProcessorProfileMgr;
-	hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pInputProcessorProfileMgr));
-	if (SUCCEEDED(hr) && (pInputProcessorProfileMgr != nullptr))
-	{
-		hr = pInputProcessorProfileMgr->UnregisterProfile(c_clsidTextService, TEXTSERVICE_LANGID, c_guidProfile, TF_URP_ALLPROFILES);
-	}
+    hr = CoCreateInstance(CLSID_TF_InputProcessorProfiles, nullptr,
+            CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pInputProcessorProfileMgr));
+    if (FAILED(hr))
+        return;
+
+    hr = pInputProcessorProfileMgr->UnregisterProfile(c_clsidTextService,
+            TEXTSERVICE_LANGID, c_guidRomaKanaProfile, TF_URP_ALLPROFILES);
+    assert(SUCCEEDED(hr));
+    hr = pInputProcessorProfileMgr->UnregisterProfile(c_clsidTextService,
+        TEXTSERVICE_LANGID, c_guidKanaLayoutProfile, TF_URP_ALLPROFILES);
+    assert(SUCCEEDED(hr));
 }
 
 BOOL RegisterCategories()
@@ -193,31 +216,30 @@ void UnregisterServer()
 	SHDeleteKeyW(HKEY_CLASSES_ROOT, szInfoKey);
 }
 
-BOOL InstallLayoutOrTipProfileList(DWORD dwFlags)
+
+BOOL InstallLayoutOrTipProfileList(const GUID& profile, DWORD dwFlags)
 {
+    // See Setting device identifier using LoadKeyboardLayout()
+    // https://stackoverflow.com/questions/16772147/setting-device-identifier-using-loadkeyboardlayout
+
 	WCHAR clsid[CLSID_STRLEN + 1];
 	WCHAR guidprofile[CLSID_STRLEN + 1];
 	WCHAR profilelist[7 + CLSID_STRLEN * 2 + 1];
 
-	if (StringFromGUID2(c_clsidTextService, clsid, _countof(clsid)) == 0)
-	{
-		return FALSE;
-	}
+    if (StringFromGUID2(c_clsidTextService, clsid, _countof(clsid)) == 0)
+        return FALSE;
 
-	if (StringFromGUID2(c_guidProfile, guidprofile, _countof(guidprofile)) == 0)
-	{
+    if (StringFromGUID2(profile, guidprofile, _countof(guidprofile)) == 0)
 		return FALSE;
-	}
 
-	_snwprintf_s(profilelist, _TRUNCATE, L"0x%04X:%s%s", TEXTSERVICE_LANGID, clsid, guidprofile);
+	_snwprintf_s(profilelist, _TRUNCATE, L"0x%04X:%s%s", TEXTSERVICE_LANGID,
+                 clsid, guidprofile);
 
 	//try delay load input.dll
-	__try
-	{
+    __try {
 		return InstallLayoutOrTip(profilelist, dwFlags);
 	}
-	__except (EXCEPTION_EXECUTE_HANDLER)
-	{
+    __except (EXCEPTION_EXECUTE_HANDLER) {
 	}
 
 	return FALSE;
@@ -225,10 +247,13 @@ BOOL InstallLayoutOrTipProfileList(DWORD dwFlags)
 
 BOOL EnableTextService()
 {
-	return InstallLayoutOrTipProfileList(ILOT_INSTALL);
+    if (!InstallLayoutOrTipProfileList(c_guidRomaKanaProfile, ILOT_INSTALL))
+        return FALSE;
+    return InstallLayoutOrTipProfileList(c_guidKanaLayoutProfile, ILOT_INSTALL);
 }
 
 void DisableTextService()
 {
-	InstallLayoutOrTipProfileList(ILOT_UNINSTALL);
+    InstallLayoutOrTipProfileList(c_guidRomaKanaProfile, ILOT_UNINSTALL);
+    InstallLayoutOrTipProfileList(c_guidKanaLayoutProfile, ILOT_UNINSTALL);
 }
