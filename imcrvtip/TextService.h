@@ -325,9 +325,11 @@ public:
 	BOOL _UILessMode;		//UILess Mode
 	BOOL _ShowInputMode;	//InputModeWindow
 
-	//状態
-	INT inputmode;			//入力モード (無し/ひらがな/カタカナ/半角ｶﾀｶﾅ/全英/アスキー)
-	BOOL inputkey;			//見出し入力▽モード
+	// 入力モード
+	InputMode inputmode;    // 直接/ひら/カタカナ/半角ｶﾅ/全英/半英
+
+    // 変換モード
+    BOOL inputkey;			//見出し入力▽モード -- 使わない
 	BOOL abbrevmode;		//abbrevモード
 	BOOL showentry;			//候補表示▼モード
 	BOOL showcandlist;		//候補リスト表示

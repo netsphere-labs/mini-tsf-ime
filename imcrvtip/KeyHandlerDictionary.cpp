@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 
@@ -34,6 +34,7 @@ void CTextService::_DisconnectDic()
 		hPipe = INVALID_HANDLE_VALUE;
 	}
 }
+
 
 void CTextService::_SearchDic(WCHAR command)
 {

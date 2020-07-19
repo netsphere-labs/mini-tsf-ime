@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "EditSession.h"
@@ -11,7 +11,7 @@
 
 // langbar menu items
 static const struct {
-	int inputmode;
+	InputMode inputmode;
 	UINT id;
 	DWORD flag;
 	LPCWSTR text;

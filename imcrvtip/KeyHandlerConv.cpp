@@ -1,3 +1,4 @@
+﻿// -*- coding:utf-8-with-signature -*-
 
 #include "imcrvtip.h"
 #include "TextService.h"
@@ -247,6 +248,7 @@ HRESULT CTextService::_ConvAsciiJLatin(ASCII_JLATIN_CONV *pconv)
 
 	return ret;
 }
+
 
 void CTextService::_StartConv(TfEditCookie ec, ITfContext *pContext)
 {

@@ -245,11 +245,17 @@ BOOL InstallLayoutOrTipProfileList(const GUID& profile, DWORD dwFlags)
 	return FALSE;
 }
 
+
 BOOL EnableTextService()
 {
     if (!InstallLayoutOrTipProfileList(c_guidRomaKanaProfile, ILOT_INSTALL))
         return FALSE;
-    return InstallLayoutOrTipProfileList(c_guidKanaLayoutProfile, ILOT_INSTALL);
+    if (!InstallLayoutOrTipProfileList(c_guidKanaLayoutProfile, ILOT_INSTALL)) {
+        InstallLayoutOrTipProfileList(c_guidRomaKanaProfile, ILOT_UNINSTALL);
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 void DisableTextService()

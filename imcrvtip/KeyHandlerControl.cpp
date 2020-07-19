@@ -277,14 +277,11 @@ HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext,
 		break;
 
 	case SKK_NEXT_CAND:
-		if (showentry)
-		{
+        if (showentry) { // 変換中
 			_NextConv();
 			_Update(ec, pContext);
-			return S_OK;
-		}
-		else if (inputkey)
-		{
+        }
+        else {
 			_ConvRoman();
 
 			_ConvOkuriRoman();
@@ -297,9 +294,8 @@ HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext,
 				_StartConv(ec, pContext);
 			}
 			_Update(ec, pContext);
-			return S_OK;
 		}
-		break;
+        return S_OK;
 
 	case SKK_PREV_CAND:
 		if (showentry)

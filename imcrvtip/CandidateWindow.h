@@ -147,7 +147,7 @@ private:
 	std::wstring searchkeyorg;	//描画用オリジナル見出し語
 
 	//辞書登録前の状態バックアップ
-	int inputmode_bak;
+	InputMode inputmode_bak;
 	BOOL abbrevmode_bak;
 	std::wstring kana_bak;
 	size_t okuriidx_bak;
