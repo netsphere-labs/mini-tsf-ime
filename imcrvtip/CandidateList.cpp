@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "EditSession.h"
@@ -71,7 +71,8 @@ CCandidateList::~CCandidateList()
 	DllRelease();
 }
 
-STDAPI CCandidateList::QueryInterface(REFIID riid, void **ppvObj)
+
+STDMETHODIMP CCandidateList::QueryInterface(REFIID riid, void **ppvObj)
 {
 	if (ppvObj == nullptr)
 	{
@@ -98,12 +99,12 @@ STDAPI CCandidateList::QueryInterface(REFIID riid, void **ppvObj)
 	return E_NOINTERFACE;
 }
 
-STDAPI_(ULONG) CCandidateList::AddRef()
+STDMETHODIMP_(ULONG) CCandidateList::AddRef()
 {
 	return ++_cRef;
 }
 
-STDAPI_(ULONG) CCandidateList::Release()
+STDMETHODIMP_(ULONG) CCandidateList::Release()
 {
 	if (--_cRef == 0)
 	{
@@ -113,6 +114,7 @@ STDAPI_(ULONG) CCandidateList::Release()
 
 	return _cRef;
 }
+
 
 STDAPI CCandidateList::OnKeyDown(WPARAM wParam, LPARAM lParam, BOOL *pfEaten)
 {

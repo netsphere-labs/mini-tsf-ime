@@ -172,6 +172,7 @@ public:
 	HRESULT _ConvRomanKana(ROMAN_KANA_CONV *pconv);
 	HRESULT _SearchRomanKanaNode(const ROMAN_KANA_NODE &tree, ROMAN_KANA_CONV *pconv, int depth);
 	HRESULT _ConvAsciiJLatin(ASCII_JLATIN_CONV *pconv);
+
 	void _StartConv(TfEditCookie ec, ITfContext *pContext);
 	void _StartSubConv(WCHAR command);
 	void _NextConv();

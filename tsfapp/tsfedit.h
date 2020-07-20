@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
    THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
    ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
@@ -132,9 +132,9 @@ public:
     void _LoadFromFile(LPTSTR pszFile);
 
     //IUnknown methods
-    STDMETHOD (QueryInterface)(REFIID, LPVOID*);
-    STDMETHOD_ (ULONG, AddRef)();
-    STDMETHOD_ (ULONG, Release)();
+    virtual STDMETHODIMP QueryInterface(REFIID, LPVOID*);
+    virtual STDMETHODIMP_(ULONG) AddRef();
+    virtual STDMETHODIMP_(ULONG) Release();
 
     //ITextStoreACP2 methods
     IFACEMETHODIMP AdviseSink(REFIID riid, IUnknown *punk, DWORD dwMask);

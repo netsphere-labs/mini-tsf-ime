@@ -71,7 +71,8 @@ CLangBarItemButton::~CLangBarItemButton()
 	DllRelease();
 }
 
-STDAPI CLangBarItemButton::QueryInterface(REFIID riid, void **ppvObj)
+
+STDMETHODIMP CLangBarItemButton::QueryInterface(REFIID riid, void **ppvObj)
 {
 	if (ppvObj == nullptr)
 	{
@@ -100,12 +101,12 @@ STDAPI CLangBarItemButton::QueryInterface(REFIID riid, void **ppvObj)
 	return E_NOINTERFACE;
 }
 
-STDAPI_(ULONG) CLangBarItemButton::AddRef()
+STDMETHODIMP_(ULONG) CLangBarItemButton::AddRef()
 {
 	return ++_cRef;
 }
 
-STDAPI_(ULONG) CLangBarItemButton::Release()
+STDMETHODIMP_(ULONG) CLangBarItemButton::Release()
 {
 	if (--_cRef == 0)
 	{

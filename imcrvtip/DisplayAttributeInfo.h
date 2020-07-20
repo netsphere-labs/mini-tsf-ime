@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 
 class CDisplayAttributeInfo : public ITfDisplayAttributeInfo
 {
@@ -19,7 +19,7 @@ public:
 	}
 
 	// IUnknown
-	STDMETHODIMP QueryInterface(REFIID riid, void **ppvObj)
+    virtual STDMETHODIMP QueryInterface(REFIID riid, void **ppvObj)
 	{
 		if(ppvObj == nullptr)
 		{
@@ -42,12 +42,12 @@ public:
 		return E_NOINTERFACE;
 	}
 
-	STDMETHODIMP_(ULONG) AddRef(void)
+    virtual STDMETHODIMP_(ULONG) AddRef(void)
 	{
 		return ++_cRef;
 	}
 
-	STDMETHODIMP_(ULONG) Release(void)
+    virtual STDMETHODIMP_(ULONG) Release(void)
 	{
 		if(--_cRef == 0)
 		{

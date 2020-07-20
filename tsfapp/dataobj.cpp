@@ -111,6 +111,7 @@ STDMETHODIMP_(DWORD) CTSFDataObject::Release()
     if(--m_ObjRefCount == 0)
     {
         delete this;
+        return 0;
     }
    
     return m_ObjRefCount;

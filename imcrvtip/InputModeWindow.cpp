@@ -131,7 +131,8 @@ CInputModeWindow::~CInputModeWindow()
 	DllRelease();
 }
 
-STDAPI CInputModeWindow::QueryInterface(REFIID riid, void **ppvObj)
+
+STDMETHODIMP CInputModeWindow::QueryInterface(REFIID riid, void **ppvObj)
 {
 	if (ppvObj == nullptr)
 	{
@@ -154,12 +155,12 @@ STDAPI CInputModeWindow::QueryInterface(REFIID riid, void **ppvObj)
 	return E_NOINTERFACE;
 }
 
-STDAPI_(ULONG) CInputModeWindow::AddRef()
+STDMETHODIMP_(ULONG) CInputModeWindow::AddRef()
 {
 	return ++_cRef;
 }
 
-STDAPI_(ULONG) CInputModeWindow::Release()
+STDMETHODIMP_(ULONG) CInputModeWindow::Release()
 {
 	if (--_cRef == 0)
 	{

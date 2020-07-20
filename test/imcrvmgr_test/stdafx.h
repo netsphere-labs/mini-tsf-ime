@@ -1,6 +1,7 @@
-﻿#pragma once
+#pragma once
 
 #define WIN32_LEAN_AND_MEAN
+#define STRICT
 
 #include <stdio.h>
 #include <locale.h>

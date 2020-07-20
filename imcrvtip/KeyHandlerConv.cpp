@@ -1,4 +1,4 @@
-﻿// -*- coding:utf-8-with-signature -*-
+// -*- coding:utf-8-with-signature -*-
 
 #include "imcrvtip.h"
 #include "TextService.h"
@@ -250,7 +250,7 @@ HRESULT CTextService::_ConvAsciiJLatin(ASCII_JLATIN_CONV *pconv)
 }
 
 
-void CTextService::_StartConv(TfEditCookie ec, ITfContext *pContext)
+void CTextService::_StartConv(TfEditCookie ec, ITfContext* pContext)
 {
 	CANDIDATES candidates_sel;
 	CANDIDATES candidates_hint;

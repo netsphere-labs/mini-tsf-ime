@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvcnf.h"
 #include "resource.h"
 
@@ -7,7 +7,8 @@
 HINSTANCE hInst;
 HANDLE hMutex;
 
-int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
+int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+    LPWSTR lpCmdLine, int nCmdShow)
 {
 	INITCOMMONCONTROLSEX icex;
 
