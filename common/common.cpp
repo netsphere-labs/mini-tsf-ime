@@ -1,7 +1,8 @@
-﻿// -*- coding:utf-8-with-signature -*-
+// -*- coding:utf-8-with-signature -*-
 
 #include "common.h"
 
+#include <sddl.h>
 #include <bcrypt.h>
 #pragma comment(lib, "bcrypt.lib")
 
