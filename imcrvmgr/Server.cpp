@@ -1,4 +1,4 @@
-﻿
+
 #include "utf8.h"
 #include "imcrvmgr.h"
 
@@ -404,8 +404,8 @@ HANDLE SrvStart()
 	HANDLE hPipe = INVALID_HANDLE_VALUE;
 	HANDLE hThread = nullptr;
 
-	if (ConvertStringSecurityDescriptorToSecurityDescriptorW(krnlobjsddl, SDDL_REVISION_1, &psd, nullptr))
-	{
+    if (ConvertStringSecurityDescriptorToSecurityDescriptorW(krnlobjsddl,
+                SDDL_REVISION_1, &psd, nullptr)) {
 		sa.nLength = sizeof(sa);
 		sa.lpSecurityDescriptor = psd;
 		sa.bInheritHandle = FALSE;

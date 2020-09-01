@@ -358,8 +358,7 @@ HRESULT CTextService::_HandleControl(TfEditCookie ec, ITfContext *pContext,
 		break;
 
 	case SKK_NEXT_COMP:
-		if (inputkey && !showentry)
-		{
+        if ( !showentry ) {
 			_ConvRoman();
 
 			if (!complement)

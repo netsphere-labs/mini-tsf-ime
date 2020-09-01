@@ -1,4 +1,4 @@
-﻿
+
 #include "imcrvtip.h"
 #include "TextService.h"
 #include "CandidateList.h"
@@ -553,19 +553,20 @@ HRESULT CTextService::_SetText(TfEditCookie ec, ITfContext *pContext, const std:
 	return S_OK;
 }
 
-HRESULT CTextService::_ShowCandidateList(TfEditCookie ec, ITfContext *pContext, int mode)
+
+HRESULT CTextService::_ShowCandidateList(TfEditCookie ec, ITfContext *pContext,
+    int mode)
 {
 	HRESULT hr = E_FAIL;
 
 	try
 	{
 		if (_pCandidateList == nullptr)
-		{
-			_pCandidateList.Attach(new CCandidateList(this));
-		}
+            _pCandidateList.Attach(new CCandidateList(this));
 
 		CComPtr<ITfDocumentMgr> pDocumentMgr;
-		if (SUCCEEDED(pContext->GetDocumentMgr(&pDocumentMgr)) && (pDocumentMgr != nullptr))
+        if (SUCCEEDED(pContext->GetDocumentMgr(&pDocumentMgr)) &&
+            (pDocumentMgr != nullptr))
 		{
 			if (_IsComposing())
 			{

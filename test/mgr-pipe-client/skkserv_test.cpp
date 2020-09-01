@@ -9,7 +9,7 @@
 
 #include <string>
 #include "common.h"
-
+#include <assert.h>
 using namespace std;
 
 void _DisconnectDic(HANDLE hPipe)
@@ -30,12 +30,12 @@ HANDLE _ConnectDic(LPCWSTR mgrpipename)
         return INVALID_HANDLE_VALUE;
 
     HANDLE hPipe = CreateFile(mgrpipename,
-            GENERIC_WRITE | GENERIC_READ,
-            FILE_SHARE_READ | FILE_SHARE_WRITE,
-            nullptr,
-            OPEN_EXISTING,
-            SECURITY_SQOS_PRESENT | SECURITY_EFFECTIVE_ONLY | SECURITY_IDENTIFICATION,
-            nullptr);
+                GENERIC_WRITE | GENERIC_READ,
+                FILE_SHARE_READ | FILE_SHARE_WRITE,
+                nullptr,
+                OPEN_EXISTING,
+                SECURITY_SQOS_PRESENT | SECURITY_EFFECTIVE_ONLY | SECURITY_IDENTIFICATION,
+                nullptr);
     if (hPipe == INVALID_HANDLE_VALUE)
         return INVALID_HANDLE_VALUE;
 
@@ -65,7 +65,13 @@ wstring _CreateIpcName()
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    wstring mgrpipename = _CreateIpcName();
+    HANDLE hPipe = _ConnectDic(mgrpipename.c_str());
+    assert(hPipe != INVALID_HANDLE_VALUE);
+
+    // TODO: Write and read.
+
+    return 0;
 }
 
 // プログラムの実行: Ctrl + F5 または [デバッグ] > [デバッグなしで開始] メニュー

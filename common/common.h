@@ -40,11 +40,7 @@
 
 #define IMCRVMGREXE			L"imcrvmgr.exe"
 #define IMCRVCNFEXE			L"imcrvcnf.exe"
-#ifndef _DEBUG
-#define IMCRVKRNLOBJ		L"corvusskk-"
-#else
-#define IMCRVKRNLOBJ		L"corvusskk-debug-"
-#endif
+#define IMCRVKRNLOBJ		L"miniime-handle-"
 #define IMCRVMGRMUTEX		IMCRVKRNLOBJ L"mgr-"
 #define IMCRVCNFMUTEX		IMCRVKRNLOBJ L"cnf-"
 #define IMCRVMGRPIPE		L"\\\\.\\pipe\\" IMCRVKRNLOBJ

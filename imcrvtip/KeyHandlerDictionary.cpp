@@ -63,6 +63,9 @@ void CTextService::_SearchDic(WCHAR command)
 		}
 	}
 
+    searchkey = L"わたしのなまえはなかのです。"; // DEBUG
+    searchkeyorg = searchkey;
+
 	_snwprintf_s(pipebuf, _TRUNCATE, L"%c\n%s\t%s\t%s\n",
 		command, searchkey.c_str(), searchkeyorg.c_str(), okurikey.c_str());
 
@@ -79,6 +82,8 @@ void CTextService::_SearchDic(WCHAR command)
 	{
 		goto exit;
 	}
+
+    OutputDebugString(pipebuf);
 
 	if (pipebuf[0] != REP_OK)
 	{

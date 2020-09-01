@@ -1,10 +1,10 @@
-﻿
+
 #include "common.h"
 #include "parseskkdic.h"
 #include "eucjis2004.h"
 #include "dictionary.h"
 
-WCHAR krnlobjsddl[MAX_KRNLOBJNAME];	//SDDL
+//WCHAR krnlobjsddl[MAX_KRNLOBJNAME];	//SDDL
 WCHAR mgrpipename[MAX_KRNLOBJNAME];	//名前付きパイプ
 
 HANDLE hPipe = INVALID_HANDLE_VALUE;
@@ -32,9 +32,9 @@ OKURI_BLOCK okuri_block[OKURI_BLOCK_NUM] = {
 
 void _CreateIpcName()
 {
-	ZeroMemory(krnlobjsddl, sizeof(krnlobjsddl));
+    //ZeroMemory(krnlobjsddl, sizeof(krnlobjsddl));
 	ZeroMemory(mgrpipename, sizeof(mgrpipename));
-
+/*
 	LPWSTR pszUserSid = nullptr;
 
 	if (GetUserSid(&pszUserSid))
@@ -48,7 +48,7 @@ void _CreateIpcName()
 
 		LocalFree(pszUserSid);
 	}
-
+*/
 	LPWSTR pszUserUUID = nullptr;
 
 	if (GetUserUUID(&pszUserUUID))
@@ -59,6 +59,8 @@ void _CreateIpcName()
 	}
 }
 
+
+// @return If failed, FALSE.
 BOOL _ConnectDic()
 {
 	DWORD dwMode;

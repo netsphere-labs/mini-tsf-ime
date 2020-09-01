@@ -74,10 +74,16 @@ HRESULT CTextService::_HandleKey(TfEditCookie ec, ITfContext *pContext,
 	HRESULT hrc = E_ABORT;
 
     if (bSf == SKK_NULL) {
+        if (!(HIWORD(lParam) & KF_UP)) // DEBUG
+            return S_FALSE; 
         // ここで、物理VK => 文字変換
         ch = _GetCh((WORD) wParam, HIWORD(lParam));
-        if (wParam == VK_SPACE)
-            sf = SKK_NEXT_CAND; // DEBUG
+        if (wParam == VK_CONVERT) {
+            inputmode = im_hiragana;
+            sf = SKK_NULL;
+        }
+        else if (wParam == VK_SPACE)
+            sf = SKK_NEXT_COMP; // DEBUG
 		else
             sf = _GetSf((WORD) wParam, ch);
 	}
