@@ -51,9 +51,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\imcrvtip\input.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\imcrvtip\CandidateKeyHandler.cpp">
       <Filter>Text Service Files</Filter>
     </ClCompile>
@@ -117,12 +114,6 @@
     <ClCompile Include="..\imcrvtip\LanguageBar.cpp">
       <Filter>Text Service Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\imcrvtip\Register.cpp">
-      <Filter>Text Service Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\imcrvtip\Server.cpp">
-      <Filter>Text Service Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\imcrvtip\TextEditSink.cpp">
       <Filter>Text Service Files</Filter>
     </ClCompile>
@@ -140,6 +131,9 @@
     </ClCompile>
     <ClCompile Include="..\common\configxml.cpp">
       <Filter>Text Service Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dll_ref.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

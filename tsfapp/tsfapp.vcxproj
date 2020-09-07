@@ -148,7 +148,9 @@
     <ClCompile Include="..\imcrvtip\FnConfig.cpp" />
     <ClCompile Include="..\imcrvtip\FunctionProvider.cpp" />
     <ClCompile Include="..\imcrvtip\Globals.cpp" />
+    <!--    
     <ClCompile Include="..\imcrvtip\input.cpp" />
+ -->
     <ClCompile Include="..\imcrvtip\InputModeWindow.cpp" />
     <ClCompile Include="..\imcrvtip\KeyEventSink.cpp" />
     <ClCompile Include="..\imcrvtip\KeyHandler.cpp" />
@@ -158,14 +160,13 @@
     <ClCompile Include="..\imcrvtip\KeyHandlerConv.cpp" />
     <ClCompile Include="..\imcrvtip\KeyHandlerDictionary.cpp" />
     <ClCompile Include="..\imcrvtip\LanguageBar.cpp" />
-    <ClCompile Include="..\imcrvtip\Register.cpp" />
-    <ClCompile Include="..\imcrvtip\Server.cpp" />
     <ClCompile Include="..\imcrvtip\TextEditSink.cpp" />
     <ClCompile Include="..\imcrvtip\TextService.cpp" />
     <ClCompile Include="..\imcrvtip\ThreadFocusSink.cpp" />
     <ClCompile Include="..\imcrvtip\ThreadMgrEventSink.cpp" />
     <ClCompile Include="context.cpp" />
     <ClCompile Include="dataobj.cpp" />
+    <ClCompile Include="dll_ref.cpp" />
     <ClCompile Include="funcprov.cpp" />
     <ClCompile Include="persist.cpp" />
     <ClCompile Include="propldr.cpp" />
