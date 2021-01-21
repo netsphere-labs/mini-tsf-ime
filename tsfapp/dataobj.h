@@ -38,9 +38,9 @@ public:
     ~CTSFDataObject();
 
     //IUnknown methods
-    STDMETHODIMP QueryInterface(REFIID, LPVOID FAR *);
-    STDMETHODIMP_(DWORD) AddRef();
-    STDMETHODIMP_(DWORD) Release();
+    virtual STDMETHODIMP QueryInterface(REFIID, void**);
+    virtual STDMETHODIMP_(ULONG) AddRef();
+    virtual STDMETHODIMP_(ULONG) Release();
 
     //IDataObject methods
     STDMETHODIMP GetData(LPFORMATETC, LPSTGMEDIUM);

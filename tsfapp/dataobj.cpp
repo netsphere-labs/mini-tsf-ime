@@ -67,7 +67,7 @@ CTSFDataObject::~CTSFDataObject()
 **************************************************************************/
 
 STDMETHODIMP CTSFDataObject::QueryInterface(   REFIID riid, 
-                                            LPVOID *ppReturn)
+                                            void** ppReturn)
 {
     *ppReturn = NULL;
 

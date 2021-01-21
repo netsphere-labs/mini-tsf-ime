@@ -71,7 +71,7 @@ typedef struct
 
 **************************************************************************/
 
-class CTSFEditWnd : public ITextStoreACP2, // Windows 8 [desktop | UWP ]
+class CTSFEditWnd : public ITextStoreACP2, // Windows 8 [desktop | UWP]
                     public ITfContextOwnerCompositionSink,
                     public ITfFunctionProvider
 {

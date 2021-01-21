@@ -1250,6 +1250,7 @@ STDMETHODIMP CTSFEditWnd::GetWnd(TsViewCookie vcView, HWND *phwnd)
    CTSFEditWnd::InsertTextAtSelection()
 
 **************************************************************************/
+// @param dwFlags TS_IAS_QUERYONLY  Do not perform the insertion.
 STDMETHODIMP CTSFEditWnd::InsertTextAtSelection(    DWORD dwFlags, 
                                                     const WCHAR *pwszText, 
                                                     ULONG cch, 

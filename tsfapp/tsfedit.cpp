@@ -1,4 +1,4 @@
-﻿/**************************************************************************
+/**************************************************************************
    THIS CODE AND INFORMATION IS PROVIDED 'AS IS' WITHOUT WARRANTY OF
    ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO
    THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A
@@ -22,6 +22,7 @@
 #include "TSFEdit.h"
 #include "Globals.h"
 #include <ctffunc.h>
+#include <assert.h>
 
 /*
 None of the GUIDs in TSATTRS.H are defined in a LIB, so you have to include 
@@ -104,7 +105,6 @@ CTSFEditWnd::~CTSFEditWnd()
     }
 
     _Uninitialize();
-
     m_hWnd = NULL;
 }
 
@@ -113,9 +113,10 @@ CTSFEditWnd::~CTSFEditWnd()
    CTSFEditWnd::_Initialize()
 
 **************************************************************************/
-
+// @return If failed, FALSE.
 BOOL CTSFEditWnd::_Initialize(ITfThreadMgr *ptm, TfClientId tfcId)
 {
+    assert(ptm);
     HRESULT hr;
 
     InitCommonControls();
@@ -123,9 +124,7 @@ BOOL CTSFEditWnd::_Initialize(ITfThreadMgr *ptm, TfClientId tfcId)
     m_tfClientID = tfcId;
     hr = ptm->QueryInterface(IID_ITfThreadMgr, (LPVOID*)&m_pThreadMgr);
     if(FAILED(hr))
-    {
         return FALSE;
-    }
 
     hr = CoCreateInstance(  CLSID_TF_CategoryMgr,
                             NULL, 
@@ -214,11 +213,13 @@ BOOL CTSFEditWnd::_Initialize(ITfThreadMgr *ptm, TfClientId tfcId)
                                 NULL,
                                 m_hInst,
                                 (LPVOID)this);
+    if ( !m_hWnd )
+        return FALSE;
 
-    if(NULL != m_hWnd) {
-        // ES_READONLYを付けても, 日本語"だけ"入力できてしまう。ここじゃない.
-        // => WinMain() のメッセージポンプを見よ.
-        m_hwndEdit = CreateWindowEx(    WS_EX_CLIENTEDGE,
+    // edit control
+    // ES_READONLYを付けても, 日本語"だけ"入力できてしまう。ここじゃない.
+    // => WinMain() のメッセージポンプを見よ.
+    m_hwndEdit = CreateWindowEx(    WS_EX_CLIENTEDGE,
                                         TEXT("edit"),
                                         NULL,
                                         WS_CLIPSIBLINGS | 
@@ -293,9 +294,6 @@ BOOL CTSFEditWnd::_Initialize(ITfThreadMgr *ptm, TfClientId tfcId)
         UpdateWindow(m_hWnd);
 
         return TRUE;
-    }
-
-    return FALSE;
 }
 
 /**************************************************************************
@@ -1693,7 +1691,7 @@ STDMETHODIMP CTSFEditWnd::QueryInterface(REFIID riid, LPVOID *ppReturn)
     *ppReturn = NULL;
 
     //IUnknown
-    if(IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_ITextStoreACP2))
+    if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_ITextStoreACP2))
     {
         *ppReturn = static_cast<ITextStoreACP2*>(this);
     }

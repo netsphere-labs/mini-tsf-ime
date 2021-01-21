@@ -22,6 +22,7 @@
 #include "TSFWnd.h"
 #include "Globals.h"
 #include <commdlg.h> // OPENFILENAME
+#include <assert.h>
 
 /**************************************************************************
    local function prototypes
@@ -78,17 +79,18 @@ CTSFMainWnd::~CTSFMainWnd()
    CTSFMainWnd::Initialize()
 
 **************************************************************************/
-// @return If succeeded, true.
+// @return If succeeded, TRUE.
 BOOL CTSFMainWnd::Initialize(int nCmdShow)
 {
     HRESULT hr;
-
+    
+    assert(!g_pThreadMgr);
     hr = CoCreateInstance(  CLSID_TF_ThreadMgr, 
                             NULL, 
                             CLSCTX_INPROC_SERVER, 
                             IID_ITfThreadMgr, 
                             (void**)&g_pThreadMgr);
-    if (FAILED(hr))
+    if (FAILED(hr) )
         return FALSE;
 
     hr = g_pThreadMgr->Activate(&m_tfClientID);

@@ -27,7 +27,8 @@
 
 **************************************************************************/
 
-STDMETHODIMP CTSFEditWnd::OnStartComposition(ITfCompositionView *pComposition, BOOL *pfOk)
+STDMETHODIMP CTSFEditWnd::OnStartComposition(ITfCompositionView *pComposition,
+    BOOL *pfOk)
 {
     OutputDebugString(TEXT("CTSFEditWnd::OnStartComposition\n"));
 
